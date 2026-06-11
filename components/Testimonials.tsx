@@ -73,9 +73,9 @@ export default function Testimonials() {
 
         <AnimateOnScroll direction="up" delay={0.2} className="mt-10 sm:mt-14 flex flex-wrap justify-center items-center gap-6 sm:gap-10 text-center">
           {[
-            { platform: "Google Reviews", rating: "4.9/5", count: "2,400+ reviews" },
-            { platform: "TripAdvisor",    rating: "5/5",   count: "1,800+ reviews" },
-            { platform: "Trustpilot",     rating: "4.8/5", count: "900+ reviews"   },
+            { platform: "Google Reviews", rating: "4.8/5", count: "25 verified reviews" },
+            { platform: "Happy Travelers", rating: "5/5",  count: "50,000+ served"      },
+            { platform: "Years Experience", rating: "15+", count: "Est. 2009"            },
           ].map((p) => (
             <motion.div key={p.platform} whileHover={{ scale: 1.05 }} className="flex flex-col items-center">
               <p className="text-xl sm:text-2xl font-bold text-[#1B4332]">{p.rating}</p>

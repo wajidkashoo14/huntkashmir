@@ -8,7 +8,7 @@ const stats = [
   { icon: <Award size={30} className="text-[#C9A84C]" />, value: "15+", label: "Years of Experience", desc: "Trusted since 2009" },
   { icon: <Map   size={30} className="text-[#C9A84C]" />, value: "500+", label: "Tour Packages",      desc: "Across all Kashmir"  },
   { icon: <Users size={30} className="text-[#C9A84C]" />, value: "50K+", label: "Happy Travelers",    desc: "From 40+ countries"  },
-  { icon: <Star  size={30} className="text-[#C9A84C]" />, value: "4.9★", label: "Average Rating",     desc: "Google & TripAdvisor" },
+  { icon: <Star  size={30} className="text-[#C9A84C]" />, value: "4.8★", label: "Google Rating",      desc: "25 verified reviews" },
 ];
 
 export default function Stats() {

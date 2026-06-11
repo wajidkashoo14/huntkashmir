@@ -142,7 +142,6 @@ export default function Footer() {
             {[
               { emoji: "🏆", title: "Award-Winning",  desc: "Best Kashmir Tour Operator 2023" },
               { emoji: "🛡️", title: "Fully Insured",  desc: "Travel & medical insurance included" },
-              { emoji: "💳", title: "Easy Payment",   desc: "EMI options available" },
               { emoji: "📞", title: "24/7 Support",   desc: "Always here when you need us" },
             ].map((item) => (
               <div key={item.title} className="flex items-start gap-3">

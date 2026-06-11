@@ -69,7 +69,7 @@ export default function CTABanner() {
         </div>
 
         <p className="mt-7 text-white/45 text-xs sm:text-sm">
-          ✓ Free itinerary planning &nbsp;·&nbsp; ✓ No booking fees &nbsp;·&nbsp; ✓ 7-day free cancellation
+          ✓ Free itinerary planning &nbsp;·&nbsp; ✓ No booking fees
         </p>
       </AnimateOnScroll>
     </section>

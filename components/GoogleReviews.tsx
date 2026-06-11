@@ -184,38 +184,21 @@ export default async function GoogleReviews() {
             ))}
           </div>
         ) : (
-          /* No reviews yet — show a Google review CTA card */
-          <div className="flex flex-col items-center gap-6 py-6">
-            <div className="flex flex-wrap justify-center gap-2">
-              {[5, 5, 5, 5, 5].map((_, i) => (
-                <div
-                  key={i}
-                  className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 w-56 flex flex-col gap-3"
-                >
-                  <div className="flex items-center gap-2">
-                    <div className="w-9 h-9 rounded-full bg-gray-100 animate-pulse" />
-                    <div className="flex-1 space-y-1.5">
-                      <div className="h-2.5 bg-gray-100 rounded animate-pulse w-24" />
-                      <div className="h-2 bg-gray-100 rounded animate-pulse w-16" />
-                    </div>
-                  </div>
-                  <div className="flex gap-0.5">
-                    {Array.from({ length: 5 }).map((__, j) => (
-                      <svg key={j} width="14" height="14" viewBox="0 0 24 24" fill="#C9A84C" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                      </svg>
-                    ))}
-                  </div>
-                  <div className="space-y-1.5">
-                    <div className="h-2 bg-gray-100 rounded animate-pulse" />
-                    <div className="h-2 bg-gray-100 rounded animate-pulse w-4/5" />
-                    <div className="h-2 bg-gray-100 rounded animate-pulse w-3/5" />
-                  </div>
-                </div>
+          /* Google profile CTA — shown until API billing is enabled */
+          <div className="flex flex-col items-center gap-5 py-8">
+            <div className="flex items-center gap-2">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <svg key={i} width="28" height="28" viewBox="0 0 24 24" fill="#C9A84C" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
               ))}
             </div>
-            <p className="text-gray-400 text-sm text-center">
-              Real Google reviews load automatically once the API is connected.
+            <div className="text-center">
+              <p className="text-3xl font-bold text-[#1B4332]">4.8 / 5</p>
+              <p className="text-gray-500 text-sm mt-1">Based on 25 Google reviews</p>
+            </div>
+            <p className="text-gray-500 text-sm text-center max-w-md">
+              &ldquo;The end-to-end services provided by the Hunt Kashmir team were outstanding.&rdquo;
             </p>
           </div>
         )}
