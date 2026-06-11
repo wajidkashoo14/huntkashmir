@@ -10,6 +10,7 @@ const navLinks = [
   { label: "Destinations", href: "/#destinations" },
   { label: "Packages",     href: "/#packages"     },
   { label: "Why Us",       href: "/#why-us"       },
+  { label: "Hotels",        href: "/hotels"         },
   { label: "Gallery",      href: "/gallery"        },
   { label: "Contact",      href: "/#contact"      },
 ];
@@ -120,7 +121,7 @@ export default function Navbar() {
         {/* Mobile menu */}
         <div
           className={`md:hidden transition-all duration-300 overflow-hidden ${
-            mobileOpen ? "max-h-[420px] opacity-100" : "max-h-0 opacity-0"
+            mobileOpen ? "max-h-[520px] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
           <div className="navbar-glass border-t border-gray-100 px-4 py-4 flex flex-col gap-1">

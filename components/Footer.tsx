@@ -15,6 +15,7 @@ const quickLinks = [
   { label: "Destinations",  href: "/#destinations"},
   { label: "Tour Packages", href: "/#packages"   },
   { label: "Why Choose Us", href: "/#why-us"     },
+  { label: "Hotels",         href: "/hotels"      },
   { label: "Gallery",       href: "/#gallery"    },
   { label: "Contact Us",    href: "/#contact"    },
   { label: "Privacy Policy",href: "/privacy"     },
@@ -31,8 +32,8 @@ const destinations = [
 ];
 
 const socials = [
-  { icon: <FacebookIcon />,  href: "#", label: "Facebook"  },
-  { icon: <InstagramIcon />, href: "#", label: "Instagram" },
+  { icon: <FacebookIcon />,  href: "https://www.facebook.com/share/1QbxhPnkKx/?mibextid=wwXIfr", label: "Facebook"  },
+  { icon: <InstagramIcon />, href: "https://www.instagram.com/_huntkashmir365_/", label: "Instagram" },
   { icon: <YouTubeIcon />,   href: "#", label: "YouTube"   },
   { icon: <WhatsAppIcon />,  href: "https://wa.me/919596041460?text=Hi!%20I'd%20like%20to%20book%20a%20Kashmir%20tour.", label: "WhatsApp" },
 ];

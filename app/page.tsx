@@ -8,6 +8,7 @@ import WhyChooseUs      from "@/components/WhyChooseUs";
 import Gallery          from "@/components/Gallery";
 import Testimonials     from "@/components/Testimonials";
 import GoogleReviews    from "@/components/GoogleReviews";
+import HappyCustomers   from "@/components/HappyCustomers";
 import InstagramReels   from "@/components/InstagramReels";
 import CTABanner        from "@/components/CTABanner";
 import Contact          from "@/components/Contact";
@@ -120,6 +121,7 @@ export default function Home() {
 
         <Gallery />
         <Testimonials />
+        <HappyCustomers />
         <GoogleReviews />
         <InstagramReels />
         <CTABanner />
