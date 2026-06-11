@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
-import Navbar          from "@/components/Navbar";
-import Hero            from "@/components/Hero";
-import Stats           from "@/components/Stats";
-import Destinations    from "@/components/Destinations";
-import Packages        from "@/components/Packages";
-import WhyChooseUs     from "@/components/WhyChooseUs";
-import Gallery         from "@/components/Gallery";
-import Testimonials    from "@/components/Testimonials";
-import CTABanner       from "@/components/CTABanner";
-import Contact         from "@/components/Contact";
-import Footer          from "@/components/Footer";
-import ParallaxDivider from "@/components/ParallaxDivider";
+import Navbar           from "@/components/Navbar";
+import Hero             from "@/components/Hero";
+import Stats            from "@/components/Stats";
+import Destinations     from "@/components/Destinations";
+import Packages         from "@/components/Packages";
+import WhyChooseUs      from "@/components/WhyChooseUs";
+import Gallery          from "@/components/Gallery";
+import Testimonials     from "@/components/Testimonials";
+import GoogleReviews    from "@/components/GoogleReviews";
+import InstagramReels   from "@/components/InstagramReels";
+import CTABanner        from "@/components/CTABanner";
+import Contact          from "@/components/Contact";
+import Footer           from "@/components/Footer";
+import ParallaxDivider  from "@/components/ParallaxDivider";
 
 const SITE_URL = "https://www.huntkashmir365.com";
 
@@ -118,6 +120,8 @@ export default function Home() {
 
         <Gallery />
         <Testimonials />
+        <GoogleReviews />
+        <InstagramReels />
         <CTABanner />
         <Contact />
       </main>

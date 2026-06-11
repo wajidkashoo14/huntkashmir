@@ -11,7 +11,7 @@ const VIDEO_SOURCES = [
   "https://assets.mixkit.co/videos/preview/mixkit-flying-over-a-snowy-mountain-range-32753-large.mp4", // Fallback mountain aerial
 ];
 const VIDEO_FALLBACK_IMG =
-  "https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be?w=1920&q=80";
+  "https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be?w=1920&q=95&auto=format&fit=crop";
 
 /* ─── Slides ─────────────────────────────────────────────────────────────── */
 const slides = [
@@ -202,11 +202,11 @@ export default function Hero() {
           {/* Header chip */}
           <div className="flex items-center justify-center gap-2 mb-3">
             <Sparkles size={13} className="text-[#C9A84C]" />
-            <span className="text-white/70 text-xs font-semibold uppercase tracking-widest">Quick Journey Planner</span>
+            <span className="text-white text-xs font-bold uppercase tracking-widest drop-shadow">Quick Journey Planner</span>
             <Sparkles size={13} className="text-[#C9A84C]" />
           </div>
 
-          <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-2xl">
+          <div className="bg-[#0a1612]/80 backdrop-blur-2xl border border-white/20 rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-[0_8px_64px_rgba(0,0,0,0.7)] ring-1 ring-white/5">
 
             {/* ── Three selector buttons ── */}
             <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-3">
@@ -214,14 +214,14 @@ export default function Hero() {
               {/* Destination selector */}
               <button onClick={() => setOpen(open === "dest" ? null : "dest")}
                 className={`relative flex flex-col items-start gap-0.5 px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl border transition-all duration-200 text-left cursor-pointer ${
-                  open === "dest" ? "bg-white/25 border-[#C9A84C]" : "bg-white/10 border-white/15 hover:bg-white/20 hover:border-white/30"
+                  open === "dest" ? "bg-white/25 border-[#C9A84C]" : "bg-white/12 border-white/20 hover:bg-white/22 hover:border-[#C9A84C]/50"
                 }`}>
                 <div className="flex items-center gap-1.5 w-full">
                   <MapPin size={12} className="text-[#C9A84C] shrink-0" />
-                  <span className="text-white/55 text-[9px] sm:text-[10px] font-bold uppercase tracking-widest">Where</span>
+                  <span className="text-[#C9A84C]/90 text-[9px] sm:text-[10px] font-bold uppercase tracking-widest">Where</span>
                   {selDest && <Check size={9} className="text-[#C9A84C] ml-auto shrink-0" strokeWidth={3}/>}
                 </div>
-                <p className={`text-xs sm:text-sm font-semibold truncate w-full ${selDest ? "text-white" : "text-white/45"}`}>
+                <p className={`text-xs sm:text-sm font-semibold truncate w-full ${selDest ? "text-white" : "text-white/70"}`}>
                   {selDest ? selDest.label : "Destination"}
                 </p>
                 {selDest && <p className="text-[#C9A84C] text-[10px] leading-none">{selDest.sub}</p>}
@@ -230,14 +230,14 @@ export default function Hero() {
               {/* Date selector */}
               <button onClick={() => setOpen(open === "date" ? null : "date")}
                 className={`relative flex flex-col items-start gap-0.5 px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl border transition-all duration-200 text-left cursor-pointer ${
-                  open === "date" ? "bg-white/25 border-[#C9A84C]" : "bg-white/10 border-white/15 hover:bg-white/20 hover:border-white/30"
+                  open === "date" ? "bg-white/25 border-[#C9A84C]" : "bg-white/12 border-white/20 hover:bg-white/22 hover:border-[#C9A84C]/50"
                 }`}>
                 <div className="flex items-center gap-1.5 w-full">
                   <Calendar size={12} className="text-[#C9A84C] shrink-0" />
-                  <span className="text-white/55 text-[9px] sm:text-[10px] font-bold uppercase tracking-widest">When</span>
+                  <span className="text-[#C9A84C]/90 text-[9px] sm:text-[10px] font-bold uppercase tracking-widest">When</span>
                   {selMonth && <Check size={9} className="text-[#C9A84C] ml-auto shrink-0" strokeWidth={3}/>}
                 </div>
-                <p className={`text-xs sm:text-sm font-semibold truncate w-full ${selMonth ? "text-white" : "text-white/45"}`}>
+                <p className={`text-xs sm:text-sm font-semibold truncate w-full ${selMonth ? "text-white" : "text-white/70"}`}>
                   {selMonth ? `${selMonth.label} ${selMonth.year}` : "Travel Month"}
                 </p>
                 {selMonth && PEAK_MONTHS.includes(selMonth.month) && (
@@ -248,11 +248,11 @@ export default function Hero() {
               {/* Travelers selector */}
               <button onClick={() => setOpen(open === "travelers" ? null : "travelers")}
                 className={`relative flex flex-col items-start gap-0.5 px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl border transition-all duration-200 text-left cursor-pointer ${
-                  open === "travelers" ? "bg-white/25 border-[#C9A84C]" : "bg-white/10 border-white/15 hover:bg-white/20 hover:border-white/30"
+                  open === "travelers" ? "bg-white/25 border-[#C9A84C]" : "bg-white/12 border-white/20 hover:bg-white/22 hover:border-[#C9A84C]/50"
                 }`}>
                 <div className="flex items-center gap-1.5 w-full">
                   <Users size={12} className="text-[#C9A84C] shrink-0" />
-                  <span className="text-white/55 text-[9px] sm:text-[10px] font-bold uppercase tracking-widest">Who</span>
+                  <span className="text-[#C9A84C]/90 text-[9px] sm:text-[10px] font-bold uppercase tracking-widest">Who</span>
                 </div>
                 <p className="text-xs sm:text-sm font-semibold text-white truncate w-full">{travelersLabel()}</p>
                 <p className="text-[#C9A84C] text-[10px] leading-none">{selTravType.icon} {selTravType.label}</p>
@@ -379,7 +379,7 @@ export default function Hero() {
               className={`w-full py-3.5 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer ${
                 plannerComplete
                   ? "bg-[#C9A84C] hover:bg-[#d4b55a] text-[#1B4332] shadow-lg shadow-[#C9A84C]/30"
-                  : "bg-white/15 text-white/60 border border-white/20"
+                  : "bg-white/15 text-white/80 border border-white/30"
               }`}
             >
               {/* WhatsApp icon */}

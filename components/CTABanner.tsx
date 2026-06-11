@@ -18,7 +18,7 @@ export default function CTABanner() {
         style={{ y: bgY, scale: 1.15 }}
       >
         <img
-          src="https://images.unsplash.com/photo-1605130284535-11dd9eedc58a?w=1600&q=80"
+          src="https://images.unsplash.com/photo-1593181629936-11c609b8db9b?w=1600&q=85"
           alt="Kashmir"
           className="w-full h-full object-cover"
         />

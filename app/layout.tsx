@@ -154,7 +154,7 @@ const localBusinessSchema = {
       ],
       sameAs: [
         "https://www.facebook.com/huntkashmir365",
-        "https://www.instagram.com/huntkashmir365",
+        "https://www.instagram.com/_huntkashmir365_",
         "https://www.youtube.com/@huntkashmir365",
       ],
     },

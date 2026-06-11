@@ -168,6 +168,14 @@ export default function Footer() {
           </div>
         </div>
       </div>
+
+      {/* Developer credit strip */}
+      <div className="bg-black/40 border-t border-white/5 py-2 px-4 text-center">
+        <p className="text-white/25 text-xs">
+          Designed &amp; Developed by{" "}
+          <span className="text-[#C9A84C]/60 font-medium">Wajid Kashoo</span>
+        </p>
+      </div>
     </footer>
   );
 }
