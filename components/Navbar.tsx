@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, Mountain, Phone } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 
 const navLinks = [
   { label: "Home",         href: "/"             },
@@ -60,18 +61,15 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16 md:h-20">
 
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1B4332] to-[#2D6A4F] flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
-                <Mountain size={20} className="text-[#C9A84C]" />
-              </div>
-              <div className="flex flex-col leading-tight">
-                <span className={`font-bold text-lg tracking-tight transition-colors ${solid ? "text-[#1B4332]" : "text-white"}`}>
-                  HuntKashmir
-                </span>
-                <span className="text-[#C9A84C] text-xs font-semibold tracking-widest uppercase -mt-0.5">
-                  365
-                </span>
-              </div>
+            <Link href="/" className="flex items-center group">
+              <Image
+                src="/logo.png"
+                alt="Hunt Kashmir 365"
+                width={72}
+                height={72}
+                className="rounded-full object-cover transition-transform duration-300 group-hover:scale-105"
+                priority
+              />
             </Link>
 
             {/* Desktop links */}

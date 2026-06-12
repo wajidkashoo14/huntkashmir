@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Mountain, MapPin, Phone, Mail, ArrowRight } from "lucide-react";
+import Image from "next/image";
+import { MapPin, Phone, Mail, ArrowRight } from "lucide-react";
 
 /* ── Inline SVG brand icons ─────────────────────────────────────────────── */
 const FacebookIcon  = () => (<svg viewBox="0 0 24 24" fill="currentColor" width={18} height={18}><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>);
@@ -67,14 +68,14 @@ export default function Footer() {
 
         {/* Brand */}
         <div>
-          <Link href="/" className="flex items-center gap-2.5 mb-5 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1B4332] to-[#2D6A4F] flex items-center justify-center">
-              <Mountain size={20} className="text-[#C9A84C]" />
-            </div>
-            <div className="flex flex-col leading-tight">
-              <span className="font-bold text-lg text-white group-hover:text-[#C9A84C] transition-colors">HuntKashmir</span>
-              <span className="text-[#C9A84C] text-xs font-semibold tracking-widest uppercase -mt-0.5">365</span>
-            </div>
+          <Link href="/" className="flex items-center mb-5 group">
+            <Image
+              src="/logo.png"
+              alt="Hunt Kashmir 365"
+              width={80}
+              height={80}
+              className="rounded-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
           </Link>
           <p className="text-white/55 text-sm leading-relaxed mb-5">
             Your trusted partner for premium Kashmir travel experiences since 2009. We bring the magic of the Himalayas to you — safely, beautifully, and unforgettably.

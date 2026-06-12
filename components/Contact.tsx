@@ -12,9 +12,10 @@ import AnimateOnScroll, { StaggerContainer, StaggerChild } from "./AnimateOnScro
    3. Create an Email Template → copy the Template ID below
    4. Go to Account → API Keys → copy the Public Key below
    ──────────────────────────────────────────────────────────────────────────── */
-const EMAILJS_SERVICE_ID  = "YOUR_SERVICE_ID";   // e.g. "service_abc123"
-const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";  // e.g. "template_xyz789"
-const EMAILJS_PUBLIC_KEY  = "YOUR_PUBLIC_KEY";   // e.g. "abcDEF123456"
+const EMAILJS_SERVICE_ID       = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID  ?? "";
+const EMAILJS_TEMPLATE_ADMIN   = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ADMIN ?? "";  // sent to you (new lead)
+const EMAILJS_TEMPLATE_CONFIRM = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_CONFIRM ?? ""; // sent to customer
+const EMAILJS_PUBLIC_KEY       = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
 
 /* ─── Contact info ──────────────────────────────────────────────────────────── */
 const contactDetails = [
@@ -105,12 +106,11 @@ export default function Contact() {
     e.preventDefault();
     setStatus("sending");
     try {
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        form as Record<string, unknown>,
-        EMAILJS_PUBLIC_KEY
-      );
+      const payload = form as Record<string, unknown>;
+      // Send lead notification to Hunt Kashmir 365
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ADMIN, payload, EMAILJS_PUBLIC_KEY);
+      // Send confirmation email to the customer
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_CONFIRM, payload, EMAILJS_PUBLIC_KEY);
       setStatus("success");
       setForm({
         from_name: "", from_email: "", phone: "", destination: "",
