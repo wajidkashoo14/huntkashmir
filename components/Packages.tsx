@@ -637,10 +637,9 @@ export default function Packages() {
         </AnimatePresence>
 
         {/* ── Trust strip ─────────────────────────────────────────────────── */}
-        <div className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-4 border-t border-white/8 pt-10">
+        <div className="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-white/8 pt-10">
           {[
             { icon:"🛡️", label:"No Hidden Costs",    desc:"Transparent pricing" },
-            { icon:"✅", label:"Free Cancellation",  desc:"Up to 7 days before" },
             { icon:"📞", label:"24/7 Support",        desc:"Always here for you"  },
             { icon:"🎯", label:"100% Customisable",   desc:"Your trip, your way"  },
           ].map((t) => (
