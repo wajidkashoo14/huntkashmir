@@ -312,14 +312,14 @@ export default function HotelsClient() {
                 href="https://wa.me/919596041460?text=Hi!%20I%20need%20help%20choosing%20a%20hotel%20for%20my%20Kashmir%20trip."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#25D366] text-white font-semibold rounded-full text-sm hover:bg-[#1da851] transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#25D366] text-white font-semibold rounded-full text-sm hover:bg-[#1da851] transition-colors w-full sm:w-auto"
               >
                 <MessageCircle size={16} />
                 Chat on WhatsApp
               </a>
               <a
                 href="/#contact"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#1B4332] text-[#1B4332] font-semibold rounded-full text-sm hover:bg-[#1B4332] hover:text-white transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#1B4332] text-[#1B4332] font-semibold rounded-full text-sm hover:bg-[#1B4332] hover:text-white transition-colors w-full sm:w-auto"
               >
                 <ChevronRight size={16} />
                 Send an Enquiry

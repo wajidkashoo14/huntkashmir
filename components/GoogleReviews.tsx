@@ -209,7 +209,7 @@ export default async function GoogleReviews() {
             href="https://www.google.com/search?q=Hunt+Kashmir+365+Srinagar+reviews"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-[#1B4332] text-[#1B4332] font-semibold text-sm transition-all hover:bg-[#1B4332] hover:text-white"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border-2 border-[#1B4332] text-[#1B4332] font-semibold text-sm transition-all hover:bg-[#1B4332] hover:text-white w-full sm:w-auto"
           >
             <GoogleLogoSmall />
             See Our Reviews on Google
@@ -218,7 +218,7 @@ export default async function GoogleReviews() {
             href="https://www.google.com/maps/search/Hunt+Kashmir+365+Srinagar"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#1B4332] text-white font-semibold text-sm transition-all hover:bg-[#2D6A4F]"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#1B4332] text-white font-semibold text-sm transition-all hover:bg-[#2D6A4F] w-full sm:w-auto"
           >
             <GoogleLogoSmall />
             Find Us on Google Maps

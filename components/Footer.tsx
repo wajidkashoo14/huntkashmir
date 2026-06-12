@@ -50,13 +50,13 @@ export default function Footer() {
             <h3 className="text-lg sm:text-xl font-bold text-white mb-1">Get Kashmir Travel Tips & Deals</h3>
             <p className="text-white/70 text-sm">Subscribe for exclusive offers, travel guides, and seasonal deals.</p>
           </div>
-          <form className="flex w-full md:w-auto gap-2" onSubmit={(e) => e.preventDefault()}>
+          <form className="flex flex-col sm:flex-row w-full md:w-auto gap-2" onSubmit={(e) => e.preventDefault()}>
             <input
               type="email"
               placeholder="Enter your email address"
               className="flex-1 md:w-64 px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-white/50 text-sm focus:outline-none focus:border-[#C9A84C] transition-colors"
             />
-            <button type="submit" className="btn-gold px-4 sm:px-5 py-3 rounded-xl text-[#1B4332] font-semibold text-sm whitespace-nowrap flex items-center gap-1.5">
+            <button type="submit" className="btn-gold px-5 py-3 rounded-xl text-[#1B4332] font-semibold text-sm whitespace-nowrap flex items-center justify-center gap-1.5">
               Subscribe <ArrowRight size={15} />
             </button>
           </form>

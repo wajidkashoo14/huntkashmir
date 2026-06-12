@@ -487,7 +487,7 @@ export default function Packages() {
                 We found <span className="text-[#C9A84C] font-bold">{results.length} perfect itineraries</span> for you
               </p>
 
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
                 {results.map((it, idx) => (
                   <motion.div
                     key={it.id}
