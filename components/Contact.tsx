@@ -365,7 +365,7 @@ export default function Contact() {
                         name="message" value={form.message} onChange={handleChange}
                         rows={4}
                         placeholder="Tell us your travel preferences, any special occasions (anniversary, birthday), dietary needs, or any questions you have..."
-                        className={`${inputCls} resize-none`}
+                        className={`${inputCls} resize-none overflow-auto`}
                       />
                     </div>
 
@@ -390,17 +390,18 @@ export default function Contact() {
                       disabled={status === "sending"}
                       whileHover={{ scale: status === "sending" ? 1 : 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full btn-primary text-white py-4 rounded-xl font-bold text-base flex items-center justify-center gap-2.5 disabled:opacity-75"
+                      className="w-full btn-primary text-white py-4 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 disabled:opacity-75"
                     >
                       {status === "sending" ? (
                         <>
                           <Loader2 size={18} className="animate-spin" />
-                          Sending Your Enquiry...
+                          Sending...
                         </>
                       ) : (
                         <>
                           <Send size={17} />
-                          Send Enquiry — We Reply in 2 Hours
+                          <span className="sm:hidden">Send Enquiry</span>
+                          <span className="hidden sm:inline">Send Enquiry — We Reply in 2 Hours</span>
                         </>
                       )}
                     </motion.button>
