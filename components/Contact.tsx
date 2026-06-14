@@ -106,7 +106,11 @@ export default function Contact() {
     e.preventDefault();
     setStatus("sending");
     try {
-      const payload = form as Record<string, unknown>;
+      // Strip everything except digits, remove leading 0 or 91 so wa.me/91{{phone}} works correctly
+      const cleanPhone = form.phone
+        .replace(/\D/g, "")           // remove spaces, dashes, +
+        .replace(/^(91|0)/, "");      // strip leading 91 or 0 if user typed it
+      const payload = { ...form, phone: cleanPhone } as Record<string, unknown>;
       // Send lead notification to Hunt Kashmir 365
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ADMIN, payload, EMAILJS_PUBLIC_KEY);
       // Send confirmation email to the customer
