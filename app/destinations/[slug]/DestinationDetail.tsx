@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import {
   ArrowLeft, ArrowRight, MapPin, Thermometer, Calendar, Navigation,
-  Check, ChevronRight, Star, ChevronDown, Phone, MessageCircle,
+  Check, ChevronRight, ChevronDown, Phone, MessageCircle,
 } from "lucide-react";
 import type { Destination } from "@/lib/destinations";
 import AnimateOnScroll, { StaggerContainer, StaggerChild } from "@/components/AnimateOnScroll";
@@ -13,16 +13,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 interface Props { dest: Destination; allDestinations: Destination[] }
-
-function StarRow({ n }: { n: number }) {
-  return (
-    <span className="flex gap-0.5">
-      {[...Array(5)].map((_, i) => (
-        <Star key={i} size={12} className={i < n ? "fill-[#C9A84C] text-[#C9A84C]" : "fill-gray-200 text-gray-200"} />
-      ))}
-    </span>
-  );
-}
 
 function RatingBar({ n }: { n: number }) {
   return (
@@ -267,40 +257,6 @@ export default function DestinationDetail({ dest, allDestinations }: Props) {
                       <h3 className="font-bold text-[#1B4332] mb-1.5 text-sm sm:text-base">{dish.name}</h3>
                       <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">{dish.desc}</p>
                     </div>
-                  </motion.div>
-                </StaggerChild>
-              ))}
-            </StaggerContainer>
-          </div>
-        </section>
-
-        {/* ════════════ WHERE TO STAY ══════════════════════════════════════ */}
-        <section className="py-14 sm:py-20 px-4 bg-white">
-          <div className="max-w-6xl mx-auto">
-            <AnimateOnScroll direction="up" className="text-center mb-10 sm:mb-14">
-              <span className="inline-block text-[#C9A84C] font-semibold text-xs uppercase tracking-widest mb-3">Accommodation</span>
-              <h2 className="section-title text-3xl sm:text-4xl font-bold text-[#0F1923]">Where to Stay in {dest.name}</h2>
-            </AnimateOnScroll>
-            <StaggerContainer stagger={0.12} className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
-              {dest.hotels.map((h,i) => (
-                <StaggerChild key={i} direction="up">
-                  <motion.div whileHover={{ y:-6, boxShadow:"0 20px 40px rgba(0,0,0,0.1)" }}
-                    className="bg-[#F8F6F0] rounded-2xl p-5 sm:p-6 border border-gray-100">
-                    <div className="flex items-start justify-between mb-3 gap-3">
-                      <div>
-                        <h3 className="font-bold text-[#1B4332] text-base sm:text-lg leading-tight">{h.name}</h3>
-                        <p className="text-[#C9A84C] text-xs font-semibold mt-0.5">{h.type}</p>
-                      </div>
-                      <div className="text-right shrink-0">
-                        <p className="font-bold text-[#1B4332] text-sm sm:text-base">{h.price}</p>
-                        <StarRow n={h.stars}/>
-                      </div>
-                    </div>
-                    <p className="text-gray-600 text-sm leading-relaxed">{h.desc}</p>
-                    <motion.button whileHover={{ scale:1.02 }} whileTap={{ scale:0.98 }}
-                      className="mt-4 w-full btn-primary text-white py-2.5 rounded-xl text-sm font-semibold flex items-center justify-center gap-2">
-                      Check Availability <ArrowRight size={14}/>
-                    </motion.button>
                   </motion.div>
                 </StaggerChild>
               ))}
