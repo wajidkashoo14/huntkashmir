@@ -88,10 +88,10 @@ export default function DestinationDetail({ dest, allDestinations }: Props) {
 
             <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.7 }}
               className="flex flex-col sm:flex-row gap-3">
-              <a href="#packages" className="btn-gold px-7 py-3.5 rounded-full font-bold text-[#1B4332] text-sm shadow-xl text-center">
+              <a href="#packages" className="btn-gold px-7 py-3.5 rounded-full font-bold text-[#1B4332] text-sm shadow-xl text-center w-full sm:w-auto">
                 Book This Tour
               </a>
-              <a href="#gallery" className="px-7 py-3.5 rounded-full font-bold text-white text-sm border-2 border-white/50 hover:bg-white/15 transition-all text-center">
+              <a href="#gallery" className="px-7 py-3.5 rounded-full font-bold text-white text-sm border-2 border-white/50 hover:bg-white/15 transition-all text-center w-full sm:w-auto">
                 View Gallery
               </a>
             </motion.div>
@@ -440,15 +440,15 @@ export default function DestinationDetail({ dest, allDestinations }: Props) {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <motion.a href="/#packages" whileHover={{ scale:1.04 }} whileTap={{ scale:0.97 }}
-                className="btn-gold px-7 py-3.5 rounded-full font-bold text-[#1B4332] text-sm sm:text-base inline-flex items-center justify-center gap-2">
+                className="btn-gold px-7 py-3.5 rounded-full font-bold text-[#1B4332] text-sm sm:text-base inline-flex items-center justify-center gap-2 w-full sm:w-auto">
                 View All Packages <ArrowRight size={17}/>
               </motion.a>
               <motion.a href="tel:+919596041460" whileHover={{ scale:1.04 }}
-                className="px-7 py-3.5 rounded-full font-bold text-white text-sm sm:text-base border-2 border-white/50 hover:bg-white/15 transition-all inline-flex items-center justify-center gap-2">
+                className="px-7 py-3.5 rounded-full font-bold text-white text-sm sm:text-base border-2 border-white/50 hover:bg-white/15 transition-all inline-flex items-center justify-center gap-2 w-full sm:w-auto">
                 <Phone size={17}/> Call Now
               </motion.a>
               <motion.a href="https://wa.me/919596041460?text=Hi!%20I'd%20like%20to%20book%20a%20Kashmir%20tour%20to%20explore%20the%20destinations.%20Please%20help%20me%20plan%20my%20trip." target="_blank" rel="noopener noreferrer" whileHover={{ scale:1.04 }}
-                className="px-7 py-3.5 rounded-full font-bold text-white text-sm sm:text-base bg-[#25D366]/20 border-2 border-[#25D366]/50 hover:bg-[#25D366]/35 transition-all inline-flex items-center justify-center gap-2">
+                className="px-7 py-3.5 rounded-full font-bold text-white text-sm sm:text-base bg-[#25D366]/20 border-2 border-[#25D366]/50 hover:bg-[#25D366]/35 transition-all inline-flex items-center justify-center gap-2 w-full sm:w-auto">
                 <MessageCircle size={17}/> WhatsApp
               </motion.a>
             </div>

@@ -6,15 +6,15 @@ import HotelsClient from "./HotelsClient";
 const SITE_URL = "https://www.huntkashmir365.com";
 
 export const metadata: Metadata = {
-  title:       "Our Partner Hotels in Kashmir — Hunt Kashmir 365",
-  description: "Handpicked hotels, houseboats and resorts in Kashmir by Hunt Kashmir 365. Stay in the finest properties across Srinagar, Gulmarg, Pahalgam and Sonamarg.",
+  title:       "Al Asha Retreat & Deodar Resort — Hunt Kashmir 365 Partner Hotels",
+  description: "Stay at Al Asha Retreat in Srinagar or Deodar Resort in Pahalgam — handpicked partner hotels by Hunt Kashmir 365.",
   alternates:  { canonical: `${SITE_URL}/hotels` },
   openGraph: {
     title:       "Our Partner Hotels in Kashmir | Hunt Kashmir 365",
-    description: "Handpicked hotels, houseboats and resorts — Srinagar, Gulmarg, Pahalgam & Sonamarg.",
+    description: "Al Asha Retreat (Srinagar) and Deodar Resort (Pahalgam) — handpicked by Hunt Kashmir 365.",
     url:         `${SITE_URL}/hotels`,
     type:        "website",
-    images: [{ url: "https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be?w=1200&q=80", width: 1200, height: 630, alt: "Kashmir Hotels" }],
+    images: [{ url: "/hotels/al-asha-retreat/1.jpeg", width: 1200, height: 630, alt: "Hunt Kashmir 365 Partner Hotels" }],
   },
 };
 
