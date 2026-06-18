@@ -127,6 +127,7 @@ export default function Navbar() {
               <Link
                 key={link.label}
                 href={link.href}
+                onClick={() => setMobileOpen(false)}
                 className="px-4 py-3 rounded-lg text-[#1B4332] font-medium hover:bg-[#1B4332]/5 hover:text-[#C9A84C] transition-colors"
               >
                 {link.label}
@@ -134,6 +135,7 @@ export default function Navbar() {
             ))}
             <Link
               href="/#contact"
+              onClick={() => setMobileOpen(false)}
               className="mt-2 btn-gold px-5 py-3 rounded-full text-sm font-semibold text-[#1B4332] text-center"
             >
               Book Now
