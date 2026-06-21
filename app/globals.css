@@ -123,6 +123,14 @@ body {
   box-shadow: 0 2px 24px rgba(0,0,0,0.08);
 }
 
+/* Mobile menu panel — green gradient */
+.navbar-mobile-glass {
+  background: linear-gradient(160deg, #1B4332 0%, #2D6A4F 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 2px 24px rgba(0,0,0,0.15);
+}
+
 /* Hero overlay gradient */
 .hero-overlay {
   background: linear-gradient(

@@ -4,16 +4,16 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, Home as HomeIcon, MapPin, Package, Award, BedDouble, Camera, MessageSquare } from "lucide-react";
 
 const navLinks = [
-  { label: "Home",         href: "/"             },
-  { label: "Destinations", href: "/#destinations" },
-  { label: "Packages",     href: "/#packages"     },
-  { label: "Why Us",       href: "/#why-us"       },
-  { label: "Hotels",        href: "/hotels"         },
-  { label: "Gallery",      href: "/gallery"        },
-  { label: "Contact",      href: "/#contact"      },
+  { label: "Home",         href: "/"             , icon: HomeIcon    },
+  { label: "Destinations", href: "/#destinations" , icon: MapPin      },
+  { label: "Packages",     href: "/#packages"     , icon: Package     },
+  { label: "Why Us",       href: "/#why-us"       , icon: Award       },
+  { label: "Hotels",        href: "/hotels"         , icon: BedDouble   },
+  { label: "Gallery",      href: "/gallery"        , icon: Camera      },
+  { label: "Contact",      href: "/#contact"      , icon: MessageSquare },
 ];
 
 export default function Navbar() {
@@ -122,14 +122,15 @@ export default function Navbar() {
             mobileOpen ? "max-h-[520px] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <div className="navbar-glass border-t border-gray-100 px-4 py-4 flex flex-col gap-1">
+          <div className="navbar-mobile-glass border-t border-white/10 px-4 py-4 flex flex-col gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="px-4 py-3 rounded-lg text-[#1B4332] font-medium hover:bg-[#1B4332]/5 hover:text-[#C9A84C] transition-colors"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg text-white/90 font-medium hover:bg-white/10 hover:text-[#C9A84C] transition-colors"
               >
+                <link.icon size={18} className="text-[#C9A84C]" />
                 {link.label}
               </Link>
             ))}
@@ -143,7 +144,7 @@ export default function Navbar() {
             {/* Mobile phone */}
             <a
               href="tel:+919596041460"
-              className="mt-1 flex items-center justify-center gap-2 text-[#1B4332] text-sm font-medium py-2"
+              className="mt-1 flex items-center justify-center gap-2 text-white/90 text-sm font-medium py-2"
             >
               <Phone size={14} /> +91 95960 41460
             </a>
