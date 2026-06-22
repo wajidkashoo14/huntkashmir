@@ -93,7 +93,7 @@ export default function HotelsClient() {
   return (
     <>
       {/* Hero banner */}
-      <div className="relative h-64 sm:h-80 overflow-hidden">
+      <div className="relative h-72 sm:h-80 overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/hotels/al-asha-retreat/1.jpeg"
@@ -101,7 +101,7 @@ export default function HotelsClient() {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0F1923]/60 via-[#1B4332]/50 to-[#0F1923]/80" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 pt-14 sm:pt-0">
           <span className="text-[#C9A84C] text-xs font-semibold uppercase tracking-widest mb-2">
             Handpicked by Hunt Kashmir 365
           </span>

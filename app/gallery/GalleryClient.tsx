@@ -150,7 +150,7 @@ export default function GalleryClient() {
         {/* ── Filter tabs ─────────────────────────────────────────────── */}
         <section className="sticky top-16 md:top-20 z-30 bg-[#0F1923]/95 backdrop-blur-md border-b border-white/10 px-4 py-3">
           <div className="max-w-7xl mx-auto overflow-x-auto scrollbar-hide">
-            <div className="flex gap-2 w-max mx-auto">
+            <div className="flex gap-2 w-max sm:mx-auto px-1">
               {TABS.map((tab) => (
                 <motion.button
                   key={tab}
