@@ -23,7 +23,7 @@ async function getReviews(): Promise<ReviewsApiResponse> {
       next: { revalidate: 3600 },
     });
     if (!res.ok) throw new Error("Failed to fetch reviews");
-    return res.json() as Promise<ReviewsApiResponse>;
+    return await res.json(); // <-- add await here
   } catch {
     return { reviews: [], source: "fallback" };
   }
