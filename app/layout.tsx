@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
@@ -191,6 +192,20 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className="min-h-full flex flex-col bg-white text-[#0F1923]">
         {children}
         <WhatsAppButton />
+
+        {/* ── Google Ads conversion tracking ────────────────────────────── */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18329867340"
+          strategy="afterInteractive"
+        />
+        <Script id="google-ads-tag" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-18329867340');
+          `}
+        </Script>
       </body>
     </html>
   );

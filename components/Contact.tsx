@@ -17,6 +17,20 @@ const EMAILJS_TEMPLATE_ADMIN   = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ADMIN 
 const EMAILJS_TEMPLATE_CONFIRM = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_CONFIRM ?? ""; // sent to customer
 const EMAILJS_PUBLIC_KEY       = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
 
+/* ─── Google Ads conversion tracking ─────────────────────────────────────── */
+const GA_CONVERSION_ID    = "AW-18329867340";
+const GA_CONVERSION_LABEL = "KCJECOHl1tIcEMyorqRE";
+
+function fireConversion() {
+  if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
+    (window as any).gtag("event", "conversion", {
+      send_to: `${GA_CONVERSION_ID}/${GA_CONVERSION_LABEL}`,
+      value: 500,
+      currency: "INR",
+    });
+  }
+}
+
 /* ─── Contact info ──────────────────────────────────────────────────────────── */
 const contactDetails = [
   {
@@ -115,6 +129,8 @@ export default function Contact() {
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ADMIN, payload, EMAILJS_PUBLIC_KEY);
       // Send confirmation email to the customer
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_CONFIRM, payload, EMAILJS_PUBLIC_KEY);
+      // Fire Google Ads conversion — only after both emails succeed
+      fireConversion();
       setStatus("success");
       setForm({
         from_name: "", from_email: "", phone: "", destination: "",
