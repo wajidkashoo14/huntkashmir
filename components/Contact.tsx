@@ -22,8 +22,19 @@ const GA_CONVERSION_ID    = "AW-18329867340";
 const GA_CONVERSION_LABEL = "KCJECOHl1tIcEMyorqRE";
 
 function fireConversion() {
-  if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
-    (window as any).gtag("event", "conversion", {
+  if (typeof window !== "undefined") {
+    // Ensure dataLayer exists on the global window scope
+    window.dataLayer = window.dataLayer || [];
+    
+    // Fallback tracking definition function if script hasn't fully runtime hydrated
+    function gtagBackup(...args: any[]) {
+      window.dataLayer.push(arguments);
+    }
+    
+    // Extract the primary analytics tracking object or fallback to local function safe frame
+    const currentGtag = (window as any).gtag || gtagBackup;
+    
+    currentGtag("event", "conversion", {
       send_to: `${GA_CONVERSION_ID}/${GA_CONVERSION_LABEL}`,
       value: 500,
       currency: "INR",
@@ -124,13 +135,18 @@ export default function Contact() {
       const cleanPhone = form.phone
         .replace(/\D/g, "")           // remove spaces, dashes, +
         .replace(/^(91|0)/, "");      // strip leading 91 or 0 if user typed it
+      
       const payload = { ...form, phone: cleanPhone } as Record<string, unknown>;
+      
       // Send lead notification to Hunt Kashmir 365
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ADMIN, payload, EMAILJS_PUBLIC_KEY);
+      
       // Send confirmation email to the customer
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_CONFIRM, payload, EMAILJS_PUBLIC_KEY);
-      // Fire Google Ads conversion — only after both emails succeed
+      
+      // Fire Google Ads conversion — safely triggers now right after email success
       fireConversion();
+      
       setStatus("success");
       setForm({
         from_name: "", from_email: "", phone: "", destination: "",
@@ -373,7 +389,7 @@ export default function Contact() {
                           <option>₹25,000 – ₹40,000</option>
                           <option>₹40,000 – ₹60,000</option>
                           <option>₹60,000 – ₹1,00,000</option>
-                          <option>Above ₹1,00,000 (Luxury)</option>
+                          <option>Above ₹1,0,000 (Luxury)</option>
                         </select>
                       </div>
                     </div>
@@ -410,7 +426,7 @@ export default function Contact() {
                       disabled={status === "sending"}
                       whileHover={{ scale: status === "sending" ? 1 : 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full btn-primary text-white py-4 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 disabled:opacity-75"
+                      className="w-full bg-[#1B4332] text-white py-4 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 disabled:opacity-75 transition-all hover:bg-[#133024]"
                     >
                       {status === "sending" ? (
                         <>
