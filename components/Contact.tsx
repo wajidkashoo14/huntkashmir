@@ -6,35 +6,29 @@ import { MapPin, Phone, Mail, Clock, Send, CheckCircle, AlertCircle, Loader2, Us
 import { motion, AnimatePresence } from "framer-motion";
 import AnimateOnScroll, { StaggerContainer, StaggerChild } from "./AnimateOnScroll";
 
-/* ─── EmailJS Configuration ──────────────────────────────────────────────────
-   1. Sign up at https://www.emailjs.com (free plan allows 200 emails/month)
-   2. Create a Service → copy the Service ID below
-   3. Create an Email Template → copy the Template ID below
-   4. Go to Account → API Keys → copy the Public Key below
-   ──────────────────────────────────────────────────────────────────────────── */
 const EMAILJS_SERVICE_ID       = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID  ?? "";
-const EMAILJS_TEMPLATE_ADMIN   = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ADMIN ?? "";  // sent to you (new lead)
-const EMAILJS_TEMPLATE_CONFIRM = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_CONFIRM ?? ""; // sent to customer
+const EMAILJS_TEMPLATE_ADMIN   = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ADMIN ?? "";
+const EMAILJS_TEMPLATE_CONFIRM = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_CONFIRM ?? "";
 const EMAILJS_PUBLIC_KEY       = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
 
-/* ─── Google Ads conversion tracking ─────────────────────────────────────── */
 const GA_CONVERSION_ID    = "AW-18329867340";
 const GA_CONVERSION_LABEL = "KCJECOHl1tIcEMyorqRE";
 
 function fireConversion() {
-  if (typeof window !== "undefined") {
-    // Ensure dataLayer exists on the global window scope
-    window.dataLayer = window.dataLayer || [];
-    
-    // Fallback tracking definition function if script hasn't fully runtime hydrated
-    function gtagBackup(...args: any[]) {
-      window.dataLayer.push(arguments);
-    }
-    
-    // Extract the primary analytics tracking object or fallback to local function safe frame
-    const currentGtag = (window as any).gtag || gtagBackup;
-    
-    currentGtag("event", "conversion", {
+  if (typeof window === "undefined") return;
+  const gtag = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag;
+  if (typeof gtag === "function") {
+    gtag("event", "conversion", {
+      send_to: `${GA_CONVERSION_ID}/${GA_CONVERSION_LABEL}`,
+      value: 500,
+      currency: "INR",
+    });
+  } else {
+    // Fallback: push directly to dataLayer
+    (window as Window & { dataLayer?: unknown[] }).dataLayer =
+      (window as Window & { dataLayer?: unknown[] }).dataLayer ?? [];
+    (window as Window & { dataLayer?: unknown[] }).dataLayer!.push({
+      event: "conversion",
       send_to: `${GA_CONVERSION_ID}/${GA_CONVERSION_LABEL}`,
       value: 500,
       currency: "INR",
@@ -42,7 +36,6 @@ function fireConversion() {
   }
 }
 
-/* ─── Contact info ──────────────────────────────────────────────────────────── */
 const contactDetails = [
   {
     icon: <MapPin size={20} className="text-[#C9A84C]" />,
@@ -131,22 +124,13 @@ export default function Contact() {
     e.preventDefault();
     setStatus("sending");
     try {
-      // Strip everything except digits, remove leading 0 or 91 so wa.me/91{{phone}} works correctly
       const cleanPhone = form.phone
-        .replace(/\D/g, "")           // remove spaces, dashes, +
-        .replace(/^(91|0)/, "");      // strip leading 91 or 0 if user typed it
-      
+        .replace(/\D/g, "")
+        .replace(/^(91|0)/, "");
       const payload = { ...form, phone: cleanPhone } as Record<string, unknown>;
-      
-      // Send lead notification to Hunt Kashmir 365
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ADMIN, payload, EMAILJS_PUBLIC_KEY);
-      
-      // Send confirmation email to the customer
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_CONFIRM, payload, EMAILJS_PUBLIC_KEY);
-      
-      // Fire Google Ads conversion — safely triggers now right after email success
       fireConversion();
-      
       setStatus("success");
       setForm({
         from_name: "", from_email: "", phone: "", destination: "",
@@ -166,7 +150,6 @@ export default function Contact() {
     <section id="contact" className="py-16 sm:py-20 lg:py-24 px-4 bg-[#F8F6F0]">
       <div className="max-w-7xl mx-auto">
 
-        {/* Header */}
         <AnimateOnScroll direction="up" className="text-center mb-12 sm:mb-16">
           <span className="inline-block text-[#C9A84C] font-semibold text-xs sm:text-sm uppercase tracking-widest mb-3">
             Get In Touch
@@ -181,7 +164,6 @@ export default function Contact() {
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
 
-          {/* ── Contact Info sidebar ─────────────────────────────────────── */}
           <div className="lg:col-span-2 space-y-4">
             <StaggerContainer stagger={0.1} className="space-y-4">
               {contactDetails.map((c, i) => (
@@ -214,7 +196,6 @@ export default function Contact() {
               ))}
             </StaggerContainer>
 
-            {/* WhatsApp CTA card */}
             <StaggerChild direction="up">
               <motion.a
                 href="https://wa.me/919596041460?text=Hi!%20I'd%20like%20to%20plan%20a%20Kashmir%20trip.%20Can%20you%20help%20me%3F"
@@ -238,7 +219,6 @@ export default function Contact() {
             </StaggerChild>
           </div>
 
-          {/* ── Contact Form ─────────────────────────────────────────────── */}
           <AnimateOnScroll direction="right" className="lg:col-span-3">
             <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-100">
               <div className="flex items-center gap-3 mb-7">
@@ -282,7 +262,6 @@ export default function Contact() {
                     exit={{ opacity: 0 }}
                     className="space-y-4"
                   >
-                    {/* Row 1: Name + Email */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className={labelCls}>Full Name *</label>
@@ -302,7 +281,6 @@ export default function Contact() {
                       </div>
                     </div>
 
-                    {/* Row 2: Phone + Travelers */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className={labelCls}>Phone / WhatsApp *</label>
@@ -330,7 +308,6 @@ export default function Contact() {
                       </div>
                     </div>
 
-                    {/* Row 3: Destination + Trip Type */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className={labelCls}>Destination Interested In</label>
@@ -348,7 +325,6 @@ export default function Contact() {
                       </div>
                     </div>
 
-                    {/* Row 4: Travel dates */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className={labelCls}>
@@ -371,7 +347,6 @@ export default function Contact() {
                       </div>
                     </div>
 
-                    {/* Row 5: Package + Budget */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className={labelCls}>Preferred Package</label>
@@ -389,12 +364,11 @@ export default function Contact() {
                           <option>₹25,000 – ₹40,000</option>
                           <option>₹40,000 – ₹60,000</option>
                           <option>₹60,000 – ₹1,00,000</option>
-                          <option>Above ₹1,0,000 (Luxury)</option>
+                          <option>Above ₹1,00,000 (Luxury)</option>
                         </select>
                       </div>
                     </div>
 
-                    {/* Message */}
                     <div>
                       <label className={labelCls}>Special Requirements / Message</label>
                       <textarea
@@ -405,7 +379,6 @@ export default function Contact() {
                       />
                     </div>
 
-                    {/* Error banner */}
                     <AnimatePresence>
                       {status === "error" && (
                         <motion.div
@@ -420,7 +393,6 @@ export default function Contact() {
                       )}
                     </AnimatePresence>
 
-                    {/* Submit */}
                     <motion.button
                       type="submit"
                       disabled={status === "sending"}
