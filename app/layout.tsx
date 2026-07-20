@@ -5,19 +5,24 @@ import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 /* ── Site-wide constants ─────────────────────────────────────────────────── */
-export const SITE_URL  = "https://www.huntkashmir365.com";
+export const SITE_URL = "https://www.huntkashmir365.com";
 export const SITE_NAME = "Hunt Kashmir 365";
-const OG_IMAGE         = "https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be?w=1200&q=80";
+const OG_IMAGE =
+  "https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be?w=1200&q=80";
 
 /* ── Root metadata ───────────────────────────────────────────────────────── */
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
 
   title: {
-    default: "Hunt Kashmir 365 — #1 Kashmir Tour & Travel Agency | Dal Lake, Gulmarg, Pahalgam",
+    default:
+      "Hunt Kashmir 365 — #1 Kashmir Tour & Travel Agency | Dal Lake, Gulmarg, Pahalgam",
     template: "%s | Hunt Kashmir 365",
   },
 
@@ -47,52 +52,56 @@ export const metadata: Metadata = {
     "Kashmir holiday packages from India",
   ],
 
-  authors:   [{ name: "Hunt Kashmir 365", url: SITE_URL }],
-  creator:   "Hunt Kashmir 365",
+  authors: [{ name: "Hunt Kashmir 365", url: SITE_URL }],
+  creator: "Hunt Kashmir 365",
   publisher: "Hunt Kashmir 365",
-  category:  "travel",
+  category: "travel",
 
   robots: {
-    index:     true,
-    follow:    true,
+    index: true,
+    follow: true,
     googleBot: {
-      index:               true,
-      follow:              true,
+      index: true,
+      follow: true,
       "max-video-preview": -1,
       "max-image-preview": "large",
-      "max-snippet":       -1,
+      "max-snippet": -1,
     },
   },
 
   openGraph: {
-    type:        "website",
-    locale:      "en_IN",
-    url:         SITE_URL,
-    siteName:    SITE_NAME,
-    title:       "Hunt Kashmir 365 — #1 Kashmir Tour & Travel Agency",
-    description: "50,000+ happy travelers. Premium Kashmir packages — Dal Lake, Gulmarg, Pahalgam & more. Call +91 95960 41460.",
-    images: [{
-      url:    OG_IMAGE,
-      width:  1200,
-      height: 630,
-      alt:    "Dal Lake, Srinagar — Hunt Kashmir 365 Tour Packages",
-    }],
+    type: "website",
+    locale: "en_IN",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: "Hunt Kashmir 365 — #1 Kashmir Tour & Travel Agency",
+    description:
+      "50,000+ happy travelers. Premium Kashmir packages — Dal Lake, Gulmarg, Pahalgam & more. Call +91 95960 41460.",
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "Dal Lake, Srinagar — Hunt Kashmir 365 Tour Packages",
+      },
+    ],
   },
 
   twitter: {
-    card:        "summary_large_image",
-    title:       "Hunt Kashmir 365 — Premium Kashmir Tour Packages",
-    description: "Book your Kashmir dream trip. Dal Lake, Gulmarg, Pahalgam, Sonamarg & more. ✈️ 50,000+ happy travelers.",
-    images:      [OG_IMAGE],
+    card: "summary_large_image",
+    title: "Hunt Kashmir 365 — Premium Kashmir Tour Packages",
+    description:
+      "Book your Kashmir dream trip. Dal Lake, Gulmarg, Pahalgam, Sonamarg & more. ✈️ 50,000+ happy travelers.",
+    images: [OG_IMAGE],
   },
 
   alternates: { canonical: SITE_URL },
 
   other: {
-    "geo.region":    "IN-JK",
+    "geo.region": "IN-JK",
     "geo.placename": "Srinagar, Jammu & Kashmir, India",
-    "geo.position":  "34.0837;74.7973",
-    "ICBM":          "34.0837, 74.7973",
+    "geo.position": "34.0837;74.7973",
+    ICBM: "34.0837, 74.7973",
   },
 
   verification: {
@@ -105,45 +114,63 @@ const localBusinessSchema = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type":       ["TravelAgency", "LocalBusiness"],
-      "@id":         `${SITE_URL}/#organization`,
-      name:          "Hunt Kashmir 365",
-      url:           SITE_URL,
-      logo:          `${SITE_URL}/logo.png`,
-      image:         OG_IMAGE,
-      description:   "Premium Kashmir tour and travel agency based in Srinagar. Expert-crafted honeymoon, family, adventure, and luxury Kashmir tour packages since 2009.",
-      telephone:     "+91-9596041460",
-      email:         "huntkashmir365@gmail.com",
-      foundingDate:  "2009",
+      "@type": ["TravelAgency", "LocalBusiness"],
+      "@id": `${SITE_URL}/#organization`,
+      name: "Hunt Kashmir 365",
+      url: SITE_URL,
+      logo: `${SITE_URL}/logo.png`,
+      image: OG_IMAGE,
+      description:
+        "Premium Kashmir tour and travel agency based in Srinagar. Expert-crafted honeymoon, family, adventure, and luxury Kashmir tour packages since 2009.",
+      telephone: "+91-9596041460",
+      email: "huntkashmir365@gmail.com",
+      foundingDate: "2009",
       address: {
-        "@type":           "PostalAddress",
-        streetAddress:     "Gousia Complex, Khayam Chowk, Near Khyber Hospital",
-        addressLocality:   "Srinagar",
-        addressRegion:     "Jammu & Kashmir",
-        postalCode:        "190001",
-        addressCountry:    "IN",
+        "@type": "PostalAddress",
+        streetAddress: "Gousia Complex, Khayam Chowk, Near Khyber Hospital",
+        addressLocality: "Srinagar",
+        addressRegion: "Jammu & Kashmir",
+        postalCode: "190001",
+        addressCountry: "IN",
       },
       geo: {
-        "@type":    "GeoCoordinates",
-        latitude:   34.0837,
-        longitude:  74.7973,
+        "@type": "GeoCoordinates",
+        latitude: 34.0837,
+        longitude: 74.7973,
       },
       openingHoursSpecification: [
-        { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], opens: "09:00", closes: "19:00" },
-        { "@type": "OpeningHoursSpecification", dayOfWeek: ["Sunday"], opens: "10:00", closes: "16:00" },
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+          ],
+          opens: "09:00",
+          closes: "19:00",
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Sunday"],
+          opens: "10:00",
+          closes: "16:00",
+        },
       ],
       aggregateRating: {
-        "@type":       "AggregateRating",
-        ratingValue:   "4.9",
-        reviewCount:   "5100",
-        bestRating:    "5",
-        worstRating:   "1",
+        "@type": "AggregateRating",
+        ratingValue: "4.9",
+        reviewCount: "5100",
+        bestRating: "5",
+        worstRating: "1",
       },
-      priceRange:   "₹₹₹",
+      priceRange: "₹₹₹",
       currenciesAccepted: "INR",
-      paymentAccepted:    "Cash, Credit Card, UPI, Bank Transfer",
-      areaServed:   { "@type": "State", name: "Jammu & Kashmir, India" },
-      knowsAbout:   [
+      paymentAccepted: "Cash, Credit Card, UPI, Bank Transfer",
+      areaServed: { "@type": "State", name: "Jammu & Kashmir, India" },
+      knowsAbout: [
         "Dal Lake houseboat tours",
         "Gulmarg skiing and gondola tours",
         "Pahalgam valley tours",
@@ -160,25 +187,33 @@ const localBusinessSchema = {
       ],
     },
     {
-      "@type":      "WebSite",
-      "@id":        `${SITE_URL}/#website`,
-      url:          SITE_URL,
-      name:         "Hunt Kashmir 365",
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: "Hunt Kashmir 365",
       description: "Premium Kashmir tour packages and travel agency",
-      publisher:    { "@id": `${SITE_URL}/#organization` },
-      inLanguage:   "en-IN",
+      publisher: { "@id": `${SITE_URL}/#organization` },
+      inLanguage: "en-IN",
       potentialAction: {
-        "@type":        "SearchAction",
-        target:         { "@type": "EntryPoint", urlTemplate: `${SITE_URL}/destinations?q={search_term_string}` },
-        "query-input":  "required name=search_term_string",
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${SITE_URL}/destinations?q={search_term_string}`,
+        },
+        "query-input": "required name=search_term_string",
       },
     },
   ],
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-IN" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+    <html
+      lang="en-IN"
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+    >
       <head>
         <link rel="preconnect" href="https://images.unsplash.com" />
         <link rel="preconnect" href="https://plus.unsplash.com" />
@@ -186,24 +221,39 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <meta name="theme-color" content="#1B4332" />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(localBusinessSchema),
+          }}
         />
       </head>
       <body className="min-h-full flex flex-col bg-white text-[#0F1923]">
         {children}
         <WhatsAppButton />
 
-        {/* ── Google Ads conversion tracking ────────────────────────────── */}
+        {/* ── Google Ads Base Tracking (Required Site-Wide) ─────────────── */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=AW-18329867340"
           strategy="afterInteractive"
         />
-        <Script id="google-ads-tag" strategy="afterInteractive">
+        <Script id="google-ads-base" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'AW-18329867340');
+          `}
+        </Script>
+
+        {/* ── Event snippet for Submit lead form (1) conversion page ──────── */}
+        <Script id="google-ads-lead-conversion" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('event', 'conversion', {
+              'send_to': 'AW-18329867340/wDMmCPSiy9McEMyorqRE',
+              'value': 1.0,
+              'currency': 'INR'
+            });
           `}
         </Script>
       </body>
