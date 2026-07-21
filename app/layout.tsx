@@ -243,19 +243,6 @@ export default function RootLayout({
             gtag('config', 'AW-18329867340');
           `}
         </Script>
-
-        {/* ── Event snippet for Submit lead form (1) conversion page ──────── */}
-        <Script id="google-ads-lead-conversion" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('event', 'conversion', {
-              'send_to': 'AW-18329867340/wDMmCPSiy9McEMyorqRE',
-              'value': 1.0,
-              'currency': 'INR'
-            });
-          `}
-        </Script>
       </body>
     </html>
   );
