@@ -1,47 +1,54 @@
 import ReelsGrid from "./ReelsGrid";
 
+// ─── Custom Unsplash loader ────────────────────────────────────────────────
+const unsplashLoader = ({ src, width, quality }: { src: string; width: number; quality?: number }) => {
+  const base = src.split("?")[0];
+  return `${base}?w=${width}&q=${quality || 75}&auto=format&fit=crop`;
+};
+
+// ── Video data – removed all query parameters ──────────────────────────────
 const KASHMIR_VIDEOS = [
   {
     id: "v1",
     title: "Dal Lake at Dawn",
     location: "Dal Lake, Srinagar",
     video_url: "https://videos.pexels.com/video-files/37975721/16114815_2560_1440_30fps.mp4",
-    thumbnail_url: "https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be?w=600&q=80",
+    thumbnail_url: "https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be",
   },
   {
     id: "v2",
     title: "Kashmir Valley from Above",
     location: "Kashmir Valley",
     video_url: "https://videos.pexels.com/video-files/36987211/15669304_2560_1440_30fps.mp4",
-    thumbnail_url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
+    thumbnail_url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4",
   },
   {
     id: "v3",
     title: "Gondola Ride in Snow",
     location: "Gulmarg",
     video_url: "https://videos.pexels.com/video-files/30172966/12938443_1080_1920_30fps.mp4",
-    thumbnail_url: "https://images.unsplash.com/photo-1621232082074-1a7750ecc557?w=600&q=80",
+    thumbnail_url: "https://images.unsplash.com/photo-1621232082074-1a7750ecc557",
   },
   {
     id: "v4",
     title: "Autumn on the River",
     location: "Pahalgam",
     video_url: "https://videos.pexels.com/video-files/34738616/14726245_2560_1440_30fps.mp4",
-    thumbnail_url: "https://plus.unsplash.com/premium_photo-1680260413569-7e28013a3d8a?w=600&q=80",
+    thumbnail_url: "https://plus.unsplash.com/premium_photo-1680260413569-7e28013a3d8a",
   },
   {
     id: "v5",
     title: "Shikara on Dal Lake",
     location: "Dal Lake, Srinagar",
     video_url: "https://videos.pexels.com/video-files/33560296/14268461_2560_1440_30fps.mp4",
-    thumbnail_url: "https://images.unsplash.com/photo-1561287437-c69a30664793?w=600&q=80",
+    thumbnail_url: "https://images.unsplash.com/photo-1561287437-c69a30664793",
   },
   {
     id: "v6",
     title: "Wooden Boats at Sunrise",
     location: "Dal Lake, Srinagar",
     video_url: "https://videos.pexels.com/video-files/34815542/14760491_2560_1440_60fps.mp4",
-    thumbnail_url: "https://images.unsplash.com/photo-1634041837617-b43ba4bef0a1?w=600&q=80",
+    thumbnail_url: "https://images.unsplash.com/photo-1634041837617-b43ba4bef0a1",
   },
 ];
 
@@ -95,9 +102,8 @@ export default function InstagramReels() {
           </a>
         </div>
 
-        {/* Video grid — client component handles autoplay */}
+        {/* Video grid — ensure ReelsGrid uses next/image for thumbnails */}
         <ReelsGrid videos={KASHMIR_VIDEOS} />
-
       </div>
     </section>
   );

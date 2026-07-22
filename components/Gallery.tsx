@@ -1,17 +1,28 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Camera } from "lucide-react";
 import { motion } from "framer-motion";
 import AnimateOnScroll, { StaggerContainer, StaggerChild } from "./AnimateOnScroll";
 
+// ─── Custom Unsplash loader ────────────────────────────────────────────────
+const unsplashLoader = ({ src, width, quality }: { src: string; width: number; quality?: number }) => {
+  const base = src.split("?")[0];
+  return `${base}?w=${width}&q=${quality || 75}&auto=format&fit=crop`;
+};
+
+// Motion‑enhanced Image
+const MotionImage = motion(Image);
+
+// ── Image data – removed all query parameters ──────────────────────────────
 const images = [
-  { src: "https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be?w=800&q=80",             alt: "Shikaras on Dal Lake",       span: "col-span-2 row-span-2", label: "Dal Lake"          },
-  { src: "https://images.unsplash.com/photo-1621232082074-1a7750ecc557?w=600&q=80",             alt: "Gulmarg Snow Slopes",        span: "",                  label: "Gulmarg"              },
-  { src: "https://plus.unsplash.com/premium_photo-1680260413569-7e28013a3d8a?w=600&q=80",       alt: "Pahalgam Valley",            span: "",                  label: "Pahalgam"             },
-  { src: "https://images.unsplash.com/photo-1561287437-c69a30664793?w=600&q=80",               alt: "Sonamarg Glacier Meadow",    span: "",                  label: "Sonamarg"             },
-  { src: "https://images.unsplash.com/photo-1552098933-a5ceb0e5dd91?w=600&q=80",               alt: "Gulmarg Winter Landscape",   span: "",                  label: "Gulmarg Winter"       },
-  { src: "https://images.unsplash.com/photo-1564327287902-0ccf559d839e?w=600&q=80",             alt: "Dal Lake Floating Market",   span: "",                  label: "Floating Market"      },
+  { src: "https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be",             alt: "Shikaras on Dal Lake",       span: "col-span-2 row-span-2", label: "Dal Lake"          },
+  { src: "https://images.unsplash.com/photo-1621232082074-1a7750ecc557",             alt: "Gulmarg Snow Slopes",        span: "",                  label: "Gulmarg"              },
+  { src: "https://plus.unsplash.com/premium_photo-1680260413569-7e28013a3d8a",       alt: "Pahalgam Valley",            span: "",                  label: "Pahalgam"             },
+  { src: "https://images.unsplash.com/photo-1561287437-c69a30664793",               alt: "Sonamarg Glacier Meadow",    span: "",                  label: "Sonamarg"             },
+  { src: "https://images.unsplash.com/photo-1552098933-a5ceb0e5dd91",               alt: "Gulmarg Winter Landscape",   span: "",                  label: "Gulmarg Winter"       },
+  { src: "https://images.unsplash.com/photo-1564327287902-0ccf559d839e",             alt: "Dal Lake Floating Market",   span: "",                  label: "Floating Market"      },
 ];
 
 export default function Gallery() {
@@ -41,13 +52,16 @@ export default function Gallery() {
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.35 }}
               >
-                <motion.img
+                <MotionImage
+                  loader={unsplashLoader}
                   src={img.src}
                   alt={img.alt}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                  quality={75}
                   whileHover={{ scale: 1.08 }}
                   transition={{ duration: 0.5 }}
-                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <motion.div

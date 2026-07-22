@@ -1,6 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+
+// ─── Custom Unsplash loader (reused from parent) ──────────────────────────
+const unsplashLoader = ({ src, width, quality }: { src: string; width: number; quality?: number }) => {
+  const base = src.split("?")[0];
+  return `${base}?w=${width}&q=${quality || 75}&auto=format&fit=crop`;
+};
 
 interface KashmirVideo {
   id: string;
@@ -24,6 +31,9 @@ function VideoCard({ video, sectionVisible }: { video: KashmirVideo; sectionVisi
   const [playing, setPlaying] = useState(false);
   const [errored, setErrored] = useState(false);
   const [loaded, setLoaded] = useState(false);
+
+  // Generate a responsive poster image URL via the loader
+  const posterUrl = unsplashLoader({ src: video.thumbnail_url, width: 400, quality: 75 });
 
   useEffect(() => {
     const vid = videoRef.current;
@@ -62,7 +72,7 @@ function VideoCard({ video, sectionVisible }: { video: KashmirVideo; sectionVisi
         <video
           ref={videoRef}
           src={video.video_url}
-          poster={video.thumbnail_url}
+          poster={posterUrl}
           muted
           loop
           playsInline
@@ -74,13 +84,18 @@ function VideoCard({ video, sectionVisible }: { video: KashmirVideo; sectionVisi
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
       ) : (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={video.thumbnail_url}
-          alt={video.title}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          loading="lazy"
-        />
+        // Fallback image when video fails
+        <div className="absolute inset-0 w-full h-full">
+          <Image
+            loader={unsplashLoader}
+            src={video.thumbnail_url}
+            alt={video.title}
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16.66vw"
+            quality={75}
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+        </div>
       )}
 
       {/* Loading shimmer */}

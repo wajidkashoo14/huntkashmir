@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { X, ZoomIn, Heart } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import AnimateOnScroll from "./AnimateOnScroll";
@@ -47,14 +48,14 @@ export default function HappyCustomers() {
               style={{ aspectRatio: "4/5" }}
               onClick={() => setLightbox(photo)}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={photo.src}
                 alt="Happy Hunt Kashmir 365 guest"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                loading="lazy"
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                quality={75}
               />
-
               {/* Zoom icon */}
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
               <div className="absolute top-2.5 right-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -102,14 +103,19 @@ export default function HappyCustomers() {
               exit={{ scale: 0.85, opacity: 0 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
               className="relative max-w-2xl w-full rounded-2xl overflow-hidden shadow-2xl"
+              style={{ maxHeight: "80vh" }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={lightbox.src}
-                alt="Happy Hunt Kashmir 365 guest"
-                className="w-full object-cover max-h-[80vh]"
-              />
+              <div className="relative w-full h-full" style={{ minHeight: "40vh" }}>
+                <Image
+                  src={lightbox.src}
+                  alt="Happy Hunt Kashmir 365 guest"
+                  fill
+                  className="object-contain"
+                  sizes="100vw"
+                  quality={80} // slightly higher for lightbox
+                />
+              </div>
               <button
                 onClick={() => setLightbox(null)}
                 className="absolute top-3 right-3 w-8 h-8 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center transition-colors"

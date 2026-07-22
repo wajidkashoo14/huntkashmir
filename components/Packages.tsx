@@ -3,6 +3,16 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ArrowLeft, Check, ChevronDown, MapPin, Sparkles } from "lucide-react";
+import Image from "next/image";
+
+// ─── Custom Unsplash loader ────────────────────────────────────────────────
+const unsplashLoader = ({ src, width, quality }: { src: string; width: number; quality?: number }) => {
+  const base = src.split("?")[0];
+  return `${base}?w=${width}&q=${quality || 75}&auto=format&fit=crop`;
+};
+
+// Motion-enhanced Image
+const MotionImage = motion(Image);
 
 /* ── Types ────────────────────────────────────────────────────────────────── */
 type StyleId  = "romantic"|"family"|"adventure"|"spiritual"|"luxury"|"group";
@@ -13,12 +23,12 @@ interface Selection { style: StyleId|null; duration: DurId|null; group: GroupId|
 
 /* ── Step 1 — Travel Style ────────────────────────────────────────────────── */
 const travelStyles: { id: StyleId; label: string; icon: string; desc: string; img: string }[] = [
-  { id:"romantic",   label:"Romantic Escape",   icon:"🌹", desc:"Honeymoon & couples",          img:"https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be?w=600&q=70"  },
-  { id:"family",     label:"Family Adventure",  icon:"👨‍👩‍👧", desc:"Joy for every age",             img:"https://images.unsplash.com/photo-1621232082074-1a7750ecc557?w=600&q=70"  },
-  { id:"adventure",  label:"Adventure Seeker",  icon:"🧗", desc:"Skiing, treks & thrills",       img:"https://images.unsplash.com/photo-1561287437-c69a30664793?w=600&q=70"  },
-  { id:"spiritual",  label:"Sacred Journey",    icon:"🙏", desc:"Pilgrimages & serenity",        img:"https://plus.unsplash.com/premium_photo-1680260413569-7e28013a3d8a?w=600&q=70" },
-  { id:"luxury",     label:"Luxury Retreat",    icon:"👑", desc:"Only the very finest",          img:"https://images.unsplash.com/photo-1634041837617-b43ba4bef0a1?w=600&q=70" },
-  { id:"group",      label:"Group Getaway",     icon:"🎉", desc:"Friends & colleagues",          img:"https://images.unsplash.com/photo-1646204892016-711ed35535ec?w=600&q=70" },
+  { id:"romantic",   label:"Romantic Escape",   icon:"🌹", desc:"Honeymoon & couples",          img:"https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be"  },
+  { id:"family",     label:"Family Adventure",  icon:"👨‍👩‍👧", desc:"Joy for every age",             img:"https://images.unsplash.com/photo-1621232082074-1a7750ecc557"  },
+  { id:"adventure",  label:"Adventure Seeker",  icon:"🧗", desc:"Skiing, treks & thrills",       img:"https://images.unsplash.com/photo-1561287437-c69a30664793"  },
+  { id:"spiritual",  label:"Sacred Journey",    icon:"🙏", desc:"Pilgrimages & serenity",        img:"https://plus.unsplash.com/premium_photo-1680260413569-7e28013a3d8a" },
+  { id:"luxury",     label:"Luxury Retreat",    icon:"👑", desc:"Only the very finest",          img:"https://images.unsplash.com/photo-1634041837617-b43ba4bef0a1" },
+  { id:"group",      label:"Group Getaway",     icon:"🎉", desc:"Friends & colleagues",          img:"https://images.unsplash.com/photo-1646204892016-711ed35535ec" },
 ];
 
 /* ── Step 2 — Duration ────────────────────────────────────────────────────── */
@@ -54,7 +64,7 @@ const itineraries: Itinerary[] = [
     id:"honeymoon-bliss",
     name:"Honeymoon Bliss",
     tagline:"Romance woven into every sunset",
-    image:"https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be?w=900&q=80",
+    image:"https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be",
     days:5, nights:4,
     styles:["romantic","luxury"],
     durations:["medium"],
@@ -75,14 +85,14 @@ const itineraries: Itinerary[] = [
     id:"grand-romance",
     name:"Grand Romance",
     tagline:"Eight days of pure Kashmiri magic",
-    image:"https://images.unsplash.com/photo-1596083332905-666e9acf8807?w=900&q=80",
+    image:"https://images.unsplash.com/photo-1596083332905-666e9acf8807",
     days:8, nights:7,
     styles:["romantic","luxury"],
     durations:["long","extended"],
     groups:["couple"],
     destinations:["Dal Lake","Gulmarg","Pahalgam","Sonamarg"],
     highlights:["Heritage houseboat & 5-star hotel","Gulmarg gondola sunset","Sonamarg glacier walk","Betaab Valley & Baisaran"],
-    includes:["5-star & houseboat","All meals","Private cab throughout","Gondola tickets","Personal photographer"],
+    includes:["5-star & heritage houseboat","All meals","Private cab throughout","Gondola tickets","Personal photographer"],
     dayPlan:[
       { day:1, title:"Welcome to Paradise",       places:"Srinagar · Dal Lake",     desc:"Royal airport welcome, heritage houseboat, champagne sunset on the lake." },
       { day:2, title:"Mughal Love Gardens",       places:"Srinagar",                desc:"Shalimar Bagh, Nishat Bagh, Hazratbal — romantic morning stroll." },
@@ -99,7 +109,7 @@ const itineraries: Itinerary[] = [
     id:"family-magic",
     name:"Family Kashmir Magic",
     tagline:"Adventures the whole family will cherish",
-    image:"https://images.unsplash.com/photo-1621232082074-1a7750ecc557?w=900&q=80",
+    image:"https://images.unsplash.com/photo-1621232082074-1a7750ecc557",
     days:7, nights:6,
     styles:["family"],
     durations:["long","medium"],
@@ -121,7 +131,7 @@ const itineraries: Itinerary[] = [
     id:"adventure-trail",
     name:"Kashmir Adventure Trail",
     tagline:"For those who live for the thrill",
-    image:"https://images.unsplash.com/photo-1561287437-c69a30664793?w=900&q=80",
+    image:"https://images.unsplash.com/photo-1561287437-c69a30664793",
     days:7, nights:6,
     styles:["adventure"],
     durations:["long","medium"],
@@ -144,7 +154,7 @@ const itineraries: Itinerary[] = [
     id:"quick-getaway",
     name:"Kashmir Quick Escape",
     tagline:"Best of Kashmir in just 4 days",
-    image:"https://images.unsplash.com/photo-1564327287902-0ccf559d839e?w=900&q=80",
+    image:"https://images.unsplash.com/photo-1564327287902-0ccf559d839e",
     days:4, nights:3,
     styles:["romantic","family","group","adventure","spiritual","luxury"],
     durations:["short"],
@@ -163,7 +173,7 @@ const itineraries: Itinerary[] = [
     id:"classic-kashmir",
     name:"Classic Kashmir",
     tagline:"The perfect 5-day Kashmir experience",
-    image:"https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be?w=900&q=80",
+    image:"https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be",
     days:5, nights:4,
     styles:["romantic","family","group","adventure","spiritual","luxury"],
     durations:["medium"],
@@ -184,7 +194,7 @@ const itineraries: Itinerary[] = [
     id:"valley-explorer",
     name:"Kashmir Valley Explorer",
     tagline:"Six days of immersive Kashmir discovery",
-    image:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=80",
+    image:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4",
     days:6, nights:5,
     styles:["romantic","family","group","adventure","spiritual","luxury"],
     durations:["medium","long"],
@@ -205,7 +215,7 @@ const itineraries: Itinerary[] = [
     id:"sacred-kashmir",
     name:"Sacred Kashmir",
     tagline:"A journey of soul and serenity",
-    image:"https://plus.unsplash.com/premium_photo-1680260413569-7e28013a3d8a?w=900&q=80",
+    image:"https://plus.unsplash.com/premium_photo-1680260413569-7e28013a3d8a",
     days:6, nights:5,
     styles:["spiritual"],
     durations:["medium","long"],
@@ -227,7 +237,7 @@ const itineraries: Itinerary[] = [
     id:"luxury-grand",
     name:"Luxury Grand Kashmir",
     tagline:"Uncompromising. Unforgettable.",
-    image:"https://images.unsplash.com/photo-1643449415644-ba803f1cd03d?w=900&q=80",
+    image:"https://images.unsplash.com/photo-1643449415644-ba803f1cd03d",
     days:9, nights:8,
     styles:["luxury","romantic"],
     durations:["extended"],
@@ -252,7 +262,7 @@ const itineraries: Itinerary[] = [
     id:"group-explorer",
     name:"Group Kashmir Explorer",
     tagline:"More people, more memories",
-    image:"https://images.unsplash.com/photo-1646204894165-95ed03d988ad?w=900&q=80",
+    image:"https://images.unsplash.com/photo-1646204894165-95ed03d988ad",
     days:7, nights:6,
     styles:["group","adventure","family"],
     durations:["long","medium"],
@@ -411,7 +421,15 @@ export default function Packages() {
                     whileTap={{ scale:0.97 }}
                     className="relative overflow-hidden rounded-2xl aspect-[4/3] group cursor-pointer text-left"
                   >
-                    <img src={style.img} alt={style.label} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    <MotionImage
+                      loader={unsplashLoader}
+                      src={style.img}
+                      alt={style.label}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      quality={75}
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/10 group-hover:from-black/70 transition-all duration-300" />
                     <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
                       <span className="text-2xl sm:text-3xl mb-1.5">{style.icon}</span>
@@ -498,7 +516,15 @@ export default function Packages() {
                   >
                     {/* Image header */}
                     <div className="relative h-44 overflow-hidden">
-                      <img src={it.image} alt={it.name} className="w-full h-full object-cover" loading="lazy"/>
+                      <MotionImage
+                        loader={unsplashLoader}
+                        src={it.image}
+                        alt={it.name}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        quality={75}
+                      />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"/>
                       {it.badge && (
                         <span className={`absolute top-3 right-3 ${it.badgeColor ?? "bg-[#C9A84C]"} text-white text-[10px] font-bold px-2.5 py-1 rounded-full`}>

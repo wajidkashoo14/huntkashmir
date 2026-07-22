@@ -1,11 +1,19 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { MapPin, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { StaggerContainer, StaggerChild } from "./AnimateOnScroll";
 import AnimateOnScroll from "./AnimateOnScroll";
 
+// ─── Custom Unsplash loader ────────────────────────────────────────────────
+const unsplashLoader = ({ src, width, quality }: { src: string; width: number; quality?: number }) => {
+  const base = src.split("?")[0];
+  return `${base}?w=${width}&q=${quality || 75}&auto=format&fit=crop`;
+};
+
+// ─── Data – images without any query parameters ──────────────────────────
 const destinations = [
   {
     slug: "dal-lake",
@@ -13,7 +21,7 @@ const destinations = [
     location: "Srinagar",
     tagline: "Float on the Jewel of Kashmir",
     desc: "Experience iconic shikaras, floating markets, and luxury houseboats on Asia's most beautiful lake.",
-    image: "https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be",
     badge: "Most Popular",
     badgeColor: "bg-[#C9A84C] text-[#1B4332]",
     tours: "42 tours",
@@ -25,7 +33,7 @@ const destinations = [
     location: "Baramulla District",
     tagline: "The Meadow of Flowers",
     desc: "Asia's highest cable car, world-class skiing, and meadows blanketed in wildflowers — pure magic.",
-    image: "https://images.unsplash.com/photo-1621232082074-1a7750ecc557?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1621232082074-1a7750ecc557",
     badge: "Adventure",
     badgeColor: "bg-blue-500 text-white",
     tours: "38 tours",
@@ -37,7 +45,7 @@ const destinations = [
     location: "Anantnag District",
     tagline: "Valley of the Shepherds",
     desc: "Pine-forested valleys, the Lidder River, and the gateway to Amarnath Yatra — a romantic paradise.",
-    image: "https://plus.unsplash.com/premium_photo-1680260413569-7e28013a3d8a?w=800&q=80",
+    image: "https://plus.unsplash.com/premium_photo-1680260413569-7e28013a3d8a",
     badge: "Romantic",
     badgeColor: "bg-rose-500 text-white",
     tours: "29 tours",
@@ -49,13 +57,16 @@ const destinations = [
     location: "Ganderbal District",
     tagline: "The Meadow of Gold",
     desc: "Shimmering glaciers, alpine meadows, and the mighty Sindh River — the ultimate Himalayan retreat.",
-    image: "https://images.unsplash.com/photo-1561287437-c69a30664793?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1561287437-c69a30664793",
     badge: "Scenic",
     badgeColor: "bg-emerald-600 text-white",
     tours: "24 tours",
     accentColor: "#059669",
   },
 ];
+
+// Motion‑enhanced Image
+const MotionImage = motion(Image);
 
 export default function Destinations() {
   return (
@@ -88,15 +99,18 @@ export default function Destinations() {
                   transition={{ duration: 0.3, ease: "easeOut" }}
                   className="dest-card bg-white rounded-2xl overflow-hidden shadow-md group cursor-pointer h-full flex flex-col"
                 >
-                  {/* Image */}
+                  {/* Image – using Next.js Image with responsive sizes */}
                   <div className="relative h-52 sm:h-56 overflow-hidden">
-                    <motion.img
+                    <MotionImage
+                      loader={unsplashLoader}
                       src={dest.image}
                       alt={dest.name}
-                      className="w-full h-full object-cover"
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      quality={75}
                       whileHover={{ scale: 1.08 }}
                       transition={{ duration: 0.5, ease: "easeOut" }}
-                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
                     <span className={`absolute top-3 left-3 ${dest.badgeColor} text-xs font-bold px-3 py-1 rounded-full`}>

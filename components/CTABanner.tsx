@@ -3,7 +3,17 @@
 import { useRef } from "react";
 import { ArrowRight, Phone, MessageCircle } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 import AnimateOnScroll from "./AnimateOnScroll";
+
+// ─── Custom Unsplash loader ────────────────────────────────────────────────
+const unsplashLoader = ({ src, width, quality }: { src: string; width: number; quality?: number }) => {
+  const base = src.split("?")[0];
+  return `${base}?w=${width}&q=${quality || 75}&auto=format&fit=crop`;
+};
+
+// Motion‑enhanced Image
+const MotionImage = motion(Image);
 
 export default function CTABanner() {
   const ref = useRef<HTMLElement>(null);
@@ -17,10 +27,15 @@ export default function CTABanner() {
         className="absolute inset-0"
         style={{ y: bgY, scale: 1.15 }}
       >
-        <img
-          src="https://images.unsplash.com/photo-1593181629936-11c609b8db9b?w=1600&q=85"
-          alt="Kashmir"
-          className="w-full h-full object-cover"
+        <MotionImage
+          loader={unsplashLoader}
+          src="https://images.unsplash.com/photo-1593181629936-11c609b8db9b"
+          alt="Breathtaking Kashmir landscape with mountains, lakes, and lush greenery"
+          fill
+          className="object-cover"
+          sizes="100vw"
+          quality={75}
+          priority // since it's LCP hero-like background
         />
       </motion.div>
       <div className="absolute inset-0 bg-gradient-to-r from-[#0F1923]/92 via-[#1B4332]/82 to-[#0F1923]/92" />

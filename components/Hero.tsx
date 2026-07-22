@@ -2,16 +2,27 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { MapPin, Calendar, Users, ChevronDown, ChevronLeft, ChevronRight, Check, Sparkles } from "lucide-react";
+import { MapPin, Calendar, Users, ChevronDown, Check, Sparkles } from "lucide-react";
+import Image from "next/image";
 
-/* ─── Video sources — add /public/hero.mp4 for the most reliable option ─── */
-const VIDEO_SOURCES = [
-  "/hero.mp4",                                                                                        // Upload your own Dal Lake video to /public/hero.mp4 for best results
-  "https://videos.pexels.com/video-files/37975721/16114815_2560_1440_30fps.mp4",                    // Dal Lake with Himalayan Mountains — landscape 2560×1440
-  "https://assets.mixkit.co/videos/preview/mixkit-flying-over-a-snowy-mountain-range-32753-large.mp4", // Fallback mountain aerial
+// ─── Custom Unsplash loader ────────────────────────────────────────────────
+const unsplashLoader = ({ src, width, quality }: { src: string; width: number; quality?: number }) => {
+  const base = src.split("?")[0];
+  return `${base}?w=${width}&q=${quality || 75}&auto=format&fit=crop`;
+};
+
+/* ─── Hero background images – now all Kashmir-specific ────────────────── */
+const HERO_IMAGES = [
+  "https://kimi-web-img.moonshot.cn/img/images.unsplash.com/898f615d60f7067119ea660a0e29af667f512c80", // Dal Lake shikaras
+  "https://kimi-web-img.moonshot.cn/img/images.unsplash.com/102fc424abe089958cb63d1f2bbc4c0dc5d875a9", // Gulmarg gondola
+  "https://kimi-web-img.moonshot.cn/img/images.unsplash.com/d56c979d853fb5e6ce473f399f23c7003846cf08", // Pahalgam river valley
 ];
-const VIDEO_FALLBACK_IMG =
-  "https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be?w=1920&q=95&auto=format&fit=crop";
+
+const HERO_ALT = [
+  "Dal Lake with traditional houseboats in Srinagar, Kashmir",
+  "Snow-covered ski slopes and mountains in Gulmarg, Kashmir",
+  "Lush green meadows and pine forests in Pahalgam, Kashmir",
+];
 
 /* ─── Slides ─────────────────────────────────────────────────────────────── */
 const slides = [
@@ -22,12 +33,12 @@ const slides = [
 
 /* ─── Destinations for planner ───────────────────────────────────────────── */
 const DESTINATIONS = [
-  { id:"dal-lake",      label:"Dal Lake",      sub:"Srinagar",  img:"https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be?w=300&q=60",           emoji:"🛶" },
-  { id:"gulmarg",       label:"Gulmarg",       sub:"Baramulla", img:"https://images.unsplash.com/photo-1621232082074-1a7750ecc557?w=300&q=60",            emoji:"⛷️" },
-  { id:"pahalgam",      label:"Pahalgam",      sub:"Anantnag",  img:"https://plus.unsplash.com/premium_photo-1680260413569-7e28013a3d8a?w=300&q=60",      emoji:"🌸" },
-  { id:"sonamarg",      label:"Sonamarg",      sub:"Ganderbal", img:"https://images.unsplash.com/photo-1561287437-c69a30664793?w=300&q=60",               emoji:"🏔️" },
-  { id:"yusmarg",       label:"Yusmarg",       sub:"Budgam",    img:"https://images.unsplash.com/photo-1623612175509-30e97f5aa195?w=300&q=60",            emoji:"🌿" },
-  { id:"betaab-valley", label:"Betaab Valley", sub:"Pahalgam",  img:"https://images.unsplash.com/photo-1646204892016-711ed35535ec?w=300&q=60",            emoji:"🎬" },
+  { id:"dal-lake",      label:"Dal Lake",      sub:"Srinagar",  img:"https://images.unsplash.com/photo-1585409677983-0f6c41ca9c3b",           emoji:"🛶" },
+  { id:"gulmarg",       label:"Gulmarg",       sub:"Baramulla", img:"https://images.unsplash.com/photo-1544735716-392fe2489ffa",            emoji:"⛷️" },
+  { id:"pahalgam",      label:"Pahalgam",      sub:"Anantnag",  img:"https://images.unsplash.com/photo-1504384308090-c894fdcc538d",      emoji:"🌸" },
+  { id:"sonamarg",      label:"Sonamarg",      sub:"Ganderbal", img:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4",      emoji:"🏔️" },
+  { id:"yusmarg",       label:"Yusmarg",       sub:"Budgam",    img:"https://images.unsplash.com/photo-1501785888041-af3ef285b470",      emoji:"🌿" },
+  { id:"betaab-valley", label:"Betaab Valley", sub:"Pahalgam",  img:"https://images.unsplash.com/photo-1469474968028-56623f02e42e",      emoji:"🎬" },
 ];
 
 const TRAVELER_TYPES = [
@@ -39,7 +50,7 @@ const TRAVELER_TYPES = [
 
 /* ─── Month picker helpers ────────────────────────────────────────────────── */
 const MONTH_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-const PEAK_MONTHS = [3,4,5,8,9,10]; // April, May, June, Sep, Oct, Nov (0-indexed)
+const PEAK_MONTHS = [3,4,5,8,9,10];
 
 function getUpcomingMonths(count: number) {
   const now = new Date();
@@ -49,14 +60,11 @@ function getUpcomingMonths(count: number) {
   });
 }
 
-/* ══════════════════════════════════════════════════════════════════════════
-   COMPONENT
-══════════════════════════════════════════════════════════════════════════ */
+const MotionImage = motion(Image);
+
 export default function Hero() {
   const [slide,      setSlide]      = useState(0);
-  const [videoReady, setVideoReady] = useState(false);
-  const [videoError, setVideoError] = useState(false);
-  const [srcIndex,   setSrcIndex]   = useState(0);
+  const [imgLoaded,  setImgLoaded]  = useState(false);
 
   /* Planner state */
   const [open,         setOpen]         = useState<"dest"|"date"|"travelers"|null>(null);
@@ -67,30 +75,17 @@ export default function Hero() {
   const [childCount,   setChildCount]   = useState(0);
 
   const sectionRef = useRef<HTMLElement>(null);
-  const videoRef   = useRef<HTMLVideoElement>(null);
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
-  const videoY  = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const bgY     = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const textY   = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
-  /* Auto-rotate slides */
   useEffect(() => {
     const id = setInterval(() => setSlide((s) => (s + 1) % slides.length), 5500);
     return () => clearInterval(id);
   }, []);
 
-  /* Try next source on error */
-  const handleVideoError = () => {
-    const next = srcIndex + 1;
-    if (next < VIDEO_SOURCES.length) {
-      setSrcIndex(next);
-    } else {
-      setVideoError(true);
-    }
-  };
-
-  /* Close planner dropdowns on outside click */
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       const planner = document.getElementById("hero-planner");
@@ -102,7 +97,6 @@ export default function Hero() {
 
   const upcomingMonths = getUpcomingMonths(9);
 
-  /* Build travelers label */
   const travelersLabel = () => {
     const parts: string[] = [];
     if (adultCount > 0) parts.push(`${adultCount} ${adultCount === 1 ? "Adult":"Adults"}`);
@@ -110,7 +104,6 @@ export default function Hero() {
     return parts.join(", ") || "Select";
   };
 
-  /* WhatsApp submit */
   const handleSearch = () => {
     const dest     = selDest?.label   ?? "Any destination";
     const month    = selMonth ? `${selMonth.label} ${selMonth.year}` : "Flexible dates";
@@ -128,27 +121,35 @@ export default function Hero() {
   return (
     <section id="home" ref={sectionRef} className="relative w-full min-h-screen overflow-hidden flex flex-col">
 
-      {/* ── Background ──────────────────────────────────────────────────── */}
-      <motion.div className="absolute inset-0 w-full h-full" style={{ y: videoY, scale: 1.12 }}>
-        <img src={VIDEO_FALLBACK_IMG} alt="Kashmir landscape" className="absolute inset-0 w-full h-full object-cover" />
-        {!videoError && (
-          <video
-            key={srcIndex}
-            ref={videoRef}
-            autoPlay muted loop playsInline
-            onCanPlay={() => setVideoReady(true)}
-            onError={handleVideoError}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${videoReady ? "opacity-100" : "opacity-0"}`}
-            poster={VIDEO_FALLBACK_IMG}
-          >
-            <source src={VIDEO_SOURCES[srcIndex]} type="video/mp4" />
-          </video>
+      {/* ── Background Images (carousel) ────────────────────────────────── */}
+      <motion.div className="absolute inset-0 w-full h-full" style={{ y: bgY, scale: 1.12 }}>
+        {HERO_IMAGES.map((src, i) => (
+          <MotionImage
+            key={src}
+            loader={unsplashLoader}
+            src={src}
+            fill
+            className="object-cover"
+            sizes="100vw"
+            quality={75}
+            priority={i === 0}
+            alt={HERO_ALT[i]}
+            onLoad={i === 0 ? () => setImgLoaded(true) : undefined}
+            onError={() => setImgLoaded(true)} // fallback if image fails
+            initial={{ opacity: 0 }}
+            animate={{ opacity: slide === i ? 1 : 0 }}
+            transition={{ duration: 1.2, ease: "easeInOut" }}
+          />
+        ))}
+        {/* Fallback / loading placeholder */}
+        {!imgLoaded && (
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1B4332] via-[#2D6A4F] to-[#0a1612]" />
         )}
       </motion.div>
 
-      {/* Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/25 to-black/75 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#1B4332]/40 via-transparent to-transparent pointer-events-none" />
+      {/* Overlays – reduced opacity to let the image show better */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/60 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#1B4332]/30 via-transparent to-transparent pointer-events-none" />
 
       {/* ── Main content ────────────────────────────────────────────────── */}
       <motion.div
@@ -273,7 +274,17 @@ export default function Hero() {
                         className={`relative overflow-hidden rounded-xl aspect-[3/2] group cursor-pointer border-2 transition-all duration-200 ${
                           selDest?.id === d.id ? "border-[#C9A84C]" : "border-transparent"
                         }`}>
-                        <img src={d.img} alt={d.label} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                        <div className="relative w-full h-full">
+                          <Image
+                            loader={unsplashLoader}
+                            src={d.img}
+                            fill
+                            className="object-cover group-hover:scale-110 transition-transform duration-500"
+                            sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                            quality={75}
+                            alt={`${d.label} in ${d.sub}, Kashmir`}
+                          />
+                        </div>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"/>
                         {selDest?.id === d.id && (
                           <div className="absolute top-1.5 right-1.5 w-4 h-4 bg-[#C9A84C] rounded-full flex items-center justify-center">
@@ -382,7 +393,6 @@ export default function Hero() {
                   : "bg-white/15 text-white/80 border border-white/30"
               }`}
             >
-              {/* WhatsApp icon */}
               <svg viewBox="0 0 24 24" fill="currentColor" width={17} height={17}>
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
                 <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.852L.057 23.57a.75.75 0 0 0 .918.919l5.85-1.486A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.01-1.374l-.36-.214-3.724.946.98-3.62-.234-.372A9.818 9.818 0 1 1 12 21.818z"/>
@@ -393,7 +403,6 @@ export default function Hero() {
               }
             </motion.button>
 
-            {/* Quick-complete hint */}
             {!plannerComplete && (
               <p className="text-center text-white/30 text-[10px] mt-2">
                 {!selDest ? "Pick a destination to get started" : "Now choose your travel month"}

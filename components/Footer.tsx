@@ -75,6 +75,8 @@ export default function Footer() {
               width={80}
               height={80}
               className="rounded-full object-cover transition-transform duration-300 group-hover:scale-105"
+              priority
+              loading="eager"
             />
           </Link>
           <p className="text-white/55 text-sm leading-relaxed mb-5">

@@ -2,7 +2,17 @@
 
 import { ShieldCheck, HeartHandshake, Clock, Wallet, MapPinned, Headphones } from "lucide-react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import AnimateOnScroll, { StaggerContainer, StaggerChild } from "./AnimateOnScroll";
+
+// ─── Custom Unsplash loader ────────────────────────────────────────────────
+const unsplashLoader = ({ src, width, quality }: { src: string; width: number; quality?: number }) => {
+  const base = src.split("?")[0];
+  return `${base}?w=${width}&q=${quality || 75}&auto=format&fit=crop`;
+};
+
+// Motion‑enhanced Image
+const MotionImage = motion(Image);
 
 const features = [
   { icon: <ShieldCheck size={26} className="text-[#1B4332]" />, title: "100% Safe & Secure",    desc: "All tours are fully insured, safety-audited, and led by certified local guides with deep knowledge of the terrain." },
@@ -41,12 +51,16 @@ export default function WhyChooseUs() {
               ))}
             </div>
 
-            {/* Image with floating badge */}
+            {/* Image with floating badge – using Next.js Image */}
             <div className="mt-8 relative h-48 sm:h-56 rounded-2xl overflow-hidden shadow-xl">
-              <img
-                src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&q=80"
-                alt="Kashmir beauty"
-                className="w-full h-full object-cover"
+              <MotionImage
+                loader={unsplashLoader}
+                src="https://images.unsplash.com/photo-1551632811-561732d1e306"
+                alt="Breathtaking Kashmir landscape with mountains and lush greenery"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                quality={75}
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-[#1B4332]/50 to-transparent" />
               <div className="absolute bottom-4 left-4 text-white">

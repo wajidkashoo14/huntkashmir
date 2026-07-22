@@ -2,6 +2,16 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
+
+// ─── Custom Unsplash loader ────────────────────────────────────────────────
+const unsplashLoader = ({ src, width, quality }: { src: string; width: number; quality?: number }) => {
+  const base = src.split("?")[0];
+  return `${base}?w=${width}&q=${quality || 75}&auto=format&fit=crop`;
+};
+
+// Motion‑enhanced Image
+const MotionImage = motion(Image);
 
 interface Props {
   image: string;
@@ -24,7 +34,15 @@ export default function ParallaxDivider({ image, quote, author, flip = false }: 
         className="absolute inset-0 w-full h-full"
         style={{ y, scale: 1.2 }}
       >
-        <img src={image} alt="Kashmir" className="w-full h-full object-cover" loading="lazy" />
+        <MotionImage
+          loader={unsplashLoader}
+          src={image}
+          alt="Kashmir scenic divider"
+          fill
+          className="object-cover"
+          sizes="100vw"
+          quality={75}
+        />
       </motion.div>
 
       {/* Overlay */}
