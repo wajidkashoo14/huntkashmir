@@ -125,21 +125,22 @@ export default function Hero() {
       <motion.div className="absolute inset-0 w-full h-full" style={{ y: bgY, scale: 1.12 }}>
         {HERO_IMAGES.map((src, i) => (
           <MotionImage
-            key={src}
-            loader={unsplashLoader}
-            src={src}
-            fill
-            className="object-cover"
-            sizes="100vw"
-            quality={75}
-            priority={i === 0}
-            alt={HERO_ALT[i]}
-            onLoad={i === 0 ? () => setImgLoaded(true) : undefined}
-            onError={() => setImgLoaded(true)} // fallback if image fails
-            initial={{ opacity: 0 }}
-            animate={{ opacity: slide === i ? 1 : 0 }}
-            transition={{ duration: 1.2, ease: "easeInOut" }}
-          />
+          key={src}
+          loader={unsplashLoader}
+          src={src}
+          fill
+          className="object-cover"
+          sizes="100vw"
+          quality={60}
+          priority={i === 0}
+          fetchPriority={i === 0 ? "high" : "auto"}
+          placeholder="blur"
+          blurDataURL="data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+          onLoad={i === 0 ? () => setImgLoaded(true) : undefined}
+          initial={i === 0 ? { opacity: 1 } : { opacity: 0 }}
+          animate={{ opacity: slide === i ? 1 : 0 }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+        />
         ))}
         {/* Fallback / loading placeholder */}
         {!imgLoaded && (
