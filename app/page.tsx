@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Navbar           from "@/components/Navbar";
 import Hero             from "@/components/Hero";
 import Stats            from "@/components/Stats";
 import Destinations     from "@/components/Destinations";
@@ -12,7 +11,6 @@ import HappyCustomers   from "@/components/HappyCustomers";
 import InstagramReels   from "@/components/InstagramReels";
 import CTABanner        from "@/components/CTABanner";
 import Contact          from "@/components/Contact";
-import Footer           from "@/components/Footer";
 import ParallaxDivider  from "@/components/ParallaxDivider";
 
 const SITE_URL = "https://www.huntkashmir365.com";
@@ -97,7 +95,6 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageSchema) }}
       />
-      <Navbar />
       <main>
         <Hero />
         <Stats />
@@ -127,7 +124,6 @@ export default function Home() {
         <CTABanner />
         <Contact />
       </main>
-      <Footer />
     </>
   );
 }

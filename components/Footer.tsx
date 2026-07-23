@@ -19,7 +19,7 @@ const quickLinks = [
   { label: "Hotels",         href: "/hotels"      },
   { label: "Gallery",       href: "/#gallery"    },
   { label: "Contact Us",    href: "/#contact"    },
-  { label: "Privacy Policy",href: "/privacy"     },
+  { label: "Privacy Policy",href: "/privacy-policy" },  // ← FIXED: was "/privacy"
 ];
 
 const destinations = [
@@ -165,9 +165,9 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-white/35">
           <p>© 2025 Hunt Kashmir 365. All rights reserved.</p>
           <div className="flex gap-4 sm:gap-5">
-            <a href="#" className="hover:text-[#C9A84C] transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-[#C9A84C] transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-[#C9A84C] transition-colors">Sitemap</a>
+            <Link href="/privacy-policy" className="hover:text-[#C9A84C] transition-colors">Privacy Policy</Link>  {/* ← FIXED: was <a href="#"> */}
+            <Link href="/terms-of-service" className="hover:text-[#C9A84C] transition-colors">Terms of Service</Link>  {/* ← FIXED: was <a href="#"> */}
+            <a href="/sitemap.xml" className="hover:text-[#C9A84C] transition-colors">Sitemap</a>
           </div>
         </div>
       </div>
