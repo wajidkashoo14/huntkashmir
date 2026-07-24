@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
@@ -247,6 +248,7 @@ export default function RootLayout({
             gtag('config', 'AW-18329867340');
           `}
         </Script>
+        <GoogleAnalytics gaId="G-Y1D4MDXS5N" />
       </body>
     </html>
   );
