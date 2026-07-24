@@ -207,7 +207,7 @@ export default function Contact() {
         </AnimateOnScroll>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
-          <div className="lg:col-span-2 space-y-4">
+          <div className="lg:col-span-2 space-y-4 order-2 lg:order-1">
             <StaggerContainer stagger={0.1} className="space-y-4">
               {contactDetails.map((c, i) => (
                 <StaggerChild key={i} direction="left">
@@ -285,7 +285,7 @@ export default function Contact() {
             </StaggerChild>
           </div>
 
-          <AnimateOnScroll direction="right" className="lg:col-span-3">
+          <AnimateOnScroll direction="right" className="lg:col-span-3 order-1 lg:order-2">
             <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-100">
               <div className="flex items-center gap-3 mb-7">
                 <div className="w-10 h-10 rounded-xl bg-[#1B4332]/10 flex items-center justify-center">
