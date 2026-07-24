@@ -14,6 +14,7 @@ import {
   Users,
   Calendar,
   MessageSquare,
+  ChevronDown,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import AnimateOnScroll, {
@@ -38,6 +39,23 @@ function fireConversion() {
       send_to: `${GA_CONVERSION_ID}/${GA_CONVERSION_LABEL}`,
       value: 500,
       currency: "INR",
+    });
+  }
+}
+
+// Track WhatsApp clicks as conversions too
+function fireWhatsAppConversion() {
+  if (typeof window === "undefined") return;
+  if (typeof (window as any).gtag === "function") {
+    (window as any).gtag("event", "conversion", {
+      send_to: `${GA_CONVERSION_ID}/${GA_CONVERSION_LABEL}`,
+      value: 500,
+      currency: "INR",
+    });
+    // Also fire as a standard event for GA4
+    (window as any).gtag("event", "whatsapp_click", {
+      event_category: "engagement",
+      event_label: "contact_page_whatsapp",
     });
   }
 }
@@ -108,6 +126,7 @@ type Status = "idle" | "sending" | "success" | "error";
 export default function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<Status>("idle");
+  const [showOptional, setShowOptional] = useState(false);
   const [form, setForm] = useState({
     from_name: "",
     from_email: "",
@@ -182,8 +201,8 @@ export default function Contact() {
             Plan Your Dream Kashmir Trip
           </h2>
           <p className="mt-4 sm:mt-6 text-gray-500 text-base sm:text-lg max-w-2xl mx-auto">
-            Fill in your details and our Kashmir travel experts will craft a
-            personalised itinerary and get back to you within 2 hours.
+            Share your number and we'll call you back within 2 hours with a
+            personalised itinerary — no commitment needed.
           </p>
         </AnimateOnScroll>
 
@@ -237,6 +256,7 @@ export default function Contact() {
                 href="https://wa.me/919596041460?text=Hi!%20I'd%20like%20to%20plan%20a%20Kashmir%20trip.%20Can%20you%20help%20me%3F"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={fireWhatsAppConversion}
                 whileHover={{
                   scale: 1.02,
                   boxShadow: "0 12px 32px rgba(37,211,102,0.25)",
@@ -273,10 +293,10 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-[#0F1923]">
-                    Send Us Your Requirements
+                    Get a Free Quote
                   </h3>
                   <p className="text-gray-400 text-xs mt-0.5">
-                    We reply within 2 hours · Free consultation
+                    We call back within 2 hours · No commitment
                   </p>
                 </div>
               </div>
@@ -293,11 +313,11 @@ export default function Contact() {
                       <CheckCircle size={40} className="text-green-500" />
                     </div>
                     <h4 className="text-xl font-bold text-[#1B4332] mb-2">
-                      Message Sent!
+                      We'll call you shortly!
                     </h4>
                     <p className="text-gray-500 text-sm max-w-xs mx-auto mb-6">
-                      Thank you! Our Kashmir travel expert will call you back
-                      within 2 hours.
+                      Our Kashmir travel expert will call you back within 2
+                      hours with a personalised quote.
                     </p>
                     <button
                       onClick={() => setStatus("idle")}
@@ -315,193 +335,225 @@ export default function Contact() {
                     exit={{ opacity: 0 }}
                     className="space-y-4"
                   >
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className={labelCls}>Full Name *</label>
+                    {/* ── 3 required fields ── */}
+                    <div>
+                      <label className={labelCls}>Your Name *</label>
+                      <input
+                        name="from_name"
+                        value={form.from_name}
+                        onChange={handleChange}
+                        required
+                        type="text"
+                        placeholder="Your full name"
+                        className={inputCls}
+                      />
+                    </div>
+
+                    <div>
+                      <label className={labelCls}>Phone / WhatsApp *</label>
+                      <div className="relative">
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-semibold pointer-events-none">
+                          +91
+                        </span>
                         <input
-                          name="from_name"
-                          value={form.from_name}
+                          name="phone"
+                          value={form.phone}
                           onChange={handleChange}
                           required
-                          type="text"
-                          placeholder="Your full name"
-                          className={inputCls}
+                          type="tel"
+                          placeholder="9XXXXXXXXX"
+                          className={`${inputCls} pl-12`}
                         />
-                      </div>
-                      <div>
-                        <label className={labelCls}>Email Address *</label>
-                        <input
-                          name="from_email"
-                          value={form.from_email}
-                          onChange={handleChange}
-                          required
-                          type="email"
-                          placeholder="you@email.com"
-                          className={inputCls}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className={labelCls}>Phone / WhatsApp *</label>
-                        <div className="relative">
-                          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-semibold pointer-events-none">
-                            +91
-                          </span>
-                          <input
-                            name="phone"
-                            value={form.phone}
-                            onChange={handleChange}
-                            required
-                            type="tel"
-                            placeholder="9XXXXXXXXX"
-                            className={`${inputCls} pl-12`}
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <label className={labelCls}>
-                          <Users size={12} className="inline mr-1" />
-                          No. of Travelers *
-                        </label>
-                        <select
-                          name="travelers"
-                          value={form.travelers}
-                          onChange={handleChange}
-                          className={inputCls}
-                        >
-                          {[
-                            "1",
-                            "2",
-                            "3",
-                            "4",
-                            "5",
-                            "6",
-                            "7",
-                            "8",
-                            "9",
-                            "10+",
-                          ].map((n) => (
-                            <option key={n} value={n}>
-                              {n} {n === "1" ? "Person" : "People"}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className={labelCls}>
-                          Destination Interested In
-                        </label>
-                        <select
-                          name="destination"
-                          value={form.destination}
-                          onChange={handleChange}
-                          className={inputCls}
-                        >
-                          <option value="">Select destination</option>
-                          {DESTINATIONS.map((d) => (
-                            <option key={d}>{d}</option>
-                          ))}
-                        </select>
-                      </div>
-                      <div>
-                        <label className={labelCls}>Type of Trip</label>
-                        <select
-                          name="trip_type"
-                          value={form.trip_type}
-                          onChange={handleChange}
-                          className={inputCls}
-                        >
-                          <option value="">Select trip type</option>
-                          {TRIP_TYPES.map((t) => (
-                            <option key={t}>{t}</option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className={labelCls}>
-                          <Calendar size={12} className="inline mr-1" />
-                          Travel From Date
-                        </label>
-                        <input
-                          name="travel_date"
-                          value={form.travel_date}
-                          onChange={handleChange}
-                          type="date"
-                          min={new Date().toISOString().split("T")[0]}
-                          className={inputCls}
-                        />
-                      </div>
-                      <div>
-                        <label className={labelCls}>Return Date</label>
-                        <input
-                          name="return_date"
-                          value={form.return_date}
-                          onChange={handleChange}
-                          type="date"
-                          min={
-                            form.travel_date ||
-                            new Date().toISOString().split("T")[0]
-                          }
-                          className={inputCls}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className={labelCls}>Preferred Package</label>
-                        <select
-                          name="package"
-                          value={form.package}
-                          onChange={handleChange}
-                          className={inputCls}
-                        >
-                          <option value="">Select a package</option>
-                          {PACKAGES.map((p) => (
-                            <option key={p}>{p}</option>
-                          ))}
-                        </select>
-                      </div>
-                      <div>
-                        <label className={labelCls}>Budget (Per Person)</label>
-                        <select
-                          name="budget"
-                          value={form.budget}
-                          onChange={handleChange}
-                          className={inputCls}
-                        >
-                          <option value="">Select budget range</option>
-                          <option>Under ₹15,000</option>
-                          <option>₹15,000 – ₹25,000</option>
-                          <option>₹25,000 – ₹40,000</option>
-                          <option>₹40,000 – ₹60,000</option>
-                          <option>₹60,000 – ₹1,00,000</option>
-                          <option>Above ₹1,00,000 (Luxury)</option>
-                        </select>
                       </div>
                     </div>
 
                     <div>
-                      <label className={labelCls}>
-                        Special Requirements / Message
-                      </label>
-                      <textarea
-                        name="message"
-                        value={form.message}
+                      <label className={labelCls}>Email Address *</label>
+                      <input
+                        name="from_email"
+                        value={form.from_email}
                         onChange={handleChange}
-                        rows={4}
-                        placeholder="Tell us your travel preferences, any special occasions (anniversary, birthday), dietary needs, or any questions you have..."
-                        className={`${inputCls} resize-none overflow-auto`}
+                        required
+                        type="email"
+                        placeholder="you@email.com"
+                        className={inputCls}
                       />
                     </div>
+
+                    {/* ── Optional details toggle ── */}
+                    <button
+                      type="button"
+                      onClick={() => setShowOptional((v) => !v)}
+                      className="flex items-center gap-2 text-[#1B4332] text-sm font-semibold hover:underline focus:outline-none pt-1"
+                    >
+                      <ChevronDown
+                        size={16}
+                        className={`transition-transform duration-200 ${
+                          showOptional ? "rotate-180" : ""
+                        }`}
+                      />
+                      {showOptional
+                        ? "Hide trip details"
+                        : "Add trip details (optional — helps us personalise your quote)"}
+                    </button>
+
+                    <AnimatePresence>
+                      {showOptional && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.25 }}
+                          className="overflow-hidden space-y-4"
+                        >
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                              <label className={labelCls}>
+                                <Users size={12} className="inline mr-1" />
+                                No. of Travelers
+                              </label>
+                              <select
+                                name="travelers"
+                                value={form.travelers}
+                                onChange={handleChange}
+                                className={inputCls}
+                              >
+                                {[
+                                  "1",
+                                  "2",
+                                  "3",
+                                  "4",
+                                  "5",
+                                  "6",
+                                  "7",
+                                  "8",
+                                  "9",
+                                  "10+",
+                                ].map((n) => (
+                                  <option key={n} value={n}>
+                                    {n} {n === "1" ? "Person" : "People"}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                            <div>
+                              <label className={labelCls}>Type of Trip</label>
+                              <select
+                                name="trip_type"
+                                value={form.trip_type}
+                                onChange={handleChange}
+                                className={inputCls}
+                              >
+                                <option value="">Select trip type</option>
+                                {TRIP_TYPES.map((t) => (
+                                  <option key={t}>{t}</option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                              <label className={labelCls}>
+                                Destination Interested In
+                              </label>
+                              <select
+                                name="destination"
+                                value={form.destination}
+                                onChange={handleChange}
+                                className={inputCls}
+                              >
+                                <option value="">Select destination</option>
+                                {DESTINATIONS.map((d) => (
+                                  <option key={d}>{d}</option>
+                                ))}
+                              </select>
+                            </div>
+                            <div>
+                              <label className={labelCls}>
+                                Preferred Package
+                              </label>
+                              <select
+                                name="package"
+                                value={form.package}
+                                onChange={handleChange}
+                                className={inputCls}
+                              >
+                                <option value="">Select a package</option>
+                                {PACKAGES.map((p) => (
+                                  <option key={p}>{p}</option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                              <label className={labelCls}>
+                                <Calendar size={12} className="inline mr-1" />
+                                Travel From Date
+                              </label>
+                              <input
+                                name="travel_date"
+                                value={form.travel_date}
+                                onChange={handleChange}
+                                type="date"
+                                min={new Date().toISOString().split("T")[0]}
+                                className={inputCls}
+                              />
+                            </div>
+                            <div>
+                              <label className={labelCls}>Return Date</label>
+                              <input
+                                name="return_date"
+                                value={form.return_date}
+                                onChange={handleChange}
+                                type="date"
+                                min={
+                                  form.travel_date ||
+                                  new Date().toISOString().split("T")[0]
+                                }
+                                className={inputCls}
+                              />
+                            </div>
+                          </div>
+
+                          <div>
+                            <label className={labelCls}>
+                              Budget (Per Person)
+                            </label>
+                            <select
+                              name="budget"
+                              value={form.budget}
+                              onChange={handleChange}
+                              className={inputCls}
+                            >
+                              <option value="">Select budget range</option>
+                              <option>Under ₹15,000</option>
+                              <option>₹15,000 – ₹25,000</option>
+                              <option>₹25,000 – ₹40,000</option>
+                              <option>₹40,000 – ₹60,000</option>
+                              <option>₹60,000 – ₹1,00,000</option>
+                              <option>Above ₹1,00,000 (Luxury)</option>
+                            </select>
+                          </div>
+
+                          <div>
+                            <label className={labelCls}>
+                              Special Requirements / Message
+                            </label>
+                            <textarea
+                              name="message"
+                              value={form.message}
+                              onChange={handleChange}
+                              rows={3}
+                              placeholder="Special occasions, dietary needs, accessibility requirements..."
+                              className={`${inputCls} resize-none overflow-auto`}
+                            />
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
 
                     <AnimatePresence>
                       {status === "error" && (
@@ -533,10 +585,7 @@ export default function Contact() {
                       ) : (
                         <>
                           <Send size={17} />
-                          <span className="sm:hidden">Send Enquiry</span>
-                          <span className="hidden sm:inline">
-                            Send Enquiry — We Reply in 2 Hours
-                          </span>
+                          <span>Get My Free Quote</span>
                         </>
                       )}
                     </motion.button>
