@@ -248,7 +248,7 @@ export default function RootLayout({
             gtag('config', 'AW-18329867340');
           `}
         </Script>
-        <GoogleAnalytics gaId="G-Y1D4MDXS5N" />
+        <GoogleAnalytics gaId="G-1QR8M50J7F" />
       </body>
     </html>
   );
