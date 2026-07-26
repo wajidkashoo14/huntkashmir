@@ -163,7 +163,7 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-white/10 py-5 px-4">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-white/35">
-          <p>© 2025 Hunt Kashmir 365. All rights reserved.</p>
+          <p>© 2026 Hunt Kashmir 365. All rights reserved.</p>
           <div className="flex gap-4 sm:gap-5">
             <Link href="/privacy-policy" className="hover:text-[#C9A84C] transition-colors">Privacy Policy</Link>  {/* ← FIXED: was <a href="#"> */}
             <Link href="/terms-of-service" className="hover:text-[#C9A84C] transition-colors">Terms of Service</Link>  {/* ← FIXED: was <a href="#"> */}
@@ -176,7 +176,7 @@ export default function Footer() {
       <div className="bg-black/40 border-t border-white/5 py-2 px-4 text-center">
         <p className="text-white/25 text-xs">
           Designed &amp; Developed by{" "}
-          <span className="text-[#C9A84C]/60 font-medium">Wajid Kashoo</span>
+          <Link href="https://wajidkashoo-portfolio.netlify.app/" className="text-[#C9A84C]/60 font-medium">Wajid Kashoo</Link>
         </p>
       </div>
     </footer>
